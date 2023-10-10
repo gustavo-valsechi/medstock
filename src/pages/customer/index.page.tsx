@@ -45,7 +45,7 @@ export default function Customer({ customers }) {
         fetch={() => fetch(0)}
       />
       <div className='templates-label'>
-        <span>Meus clientes</span>
+        <span>Clientes</span>
         <p>Todos os seus clientes e seus dados serão listados nesta página, na qual você poderá adicionar novos clientes ou atualizar as informações existentes.</p>
       </div>
       <Table

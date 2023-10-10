@@ -1,10 +1,16 @@
 import React from "react"
 import { Container } from "./styles"
+import Image from "next/image"
+
+import logo from "@/assets/logo.png"
 
 export function Logo(props: any) {
   return (
     <Container {...props}>
-      <i className="fa-solid fa-hand-holding-medical" /><label>Medstock</label>
+      <div className="logo-container">
+        <Image alt="logo" src={logo} />
+      </div>
+      <label>MedStock</label>
     </Container>
   )
 }

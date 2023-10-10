@@ -2,14 +2,22 @@ import React from "react"
 import { Container } from "./styles"
 import _ from "lodash"
 
-export function Paginate(props: any) {
+interface IPaginate {
+    total: number
+    page: {
+        value: number
+        set: (value: number) => void
+    }
+}
+
+export function Paginate(props: IPaginate) {
 
     const pages = () => {
 
         const offset = Number(props.page.value) - 4
 
-        let page = offset > 0 ? offset + 1 : 1
-        let pages = []
+        let page: number = offset > 0 ? offset + 1 : 1
+        let pages: Array<any> = []
 
         while (Number(props.total) >= page) {
             pages.push(page)

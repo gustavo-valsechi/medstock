@@ -6,12 +6,18 @@ import { useAuth } from '@/contexts/auth'
 import Link from 'next/link'
 import _ from 'lodash'
 
-export default function Menu(props: any) {
+interface INavigation {
+    icon: string
+    label: string
+    route: string
+}
+
+export default function Menu(props: { show: boolean }) {
 
     const { route } = useRouter()
     const { logout, user } = useAuth()
 
-    const navigation = [
+    const navigation: Array<INavigation> = [
         { icon: 'fa-solid fa-hand-holding-dollar', label: 'Pedidos', route: '/order' },
         { icon: 'fa-solid fa-boxes-stacked', label: 'Produtos', route: '/product' },
         { icon: 'fa-solid fa-users', label: 'Clientes', route: '/customer' },
@@ -19,10 +25,10 @@ export default function Menu(props: any) {
     ]
 
     return (
-        <Container>
+        <Container {...props}>
             <div>
                 <header>
-                    <Logo size="1.8rem" />
+                    <Logo />
                 </header>
                 <nav>
                     <ul>
@@ -52,11 +58,13 @@ export default function Menu(props: any) {
                     <div className='profile-content'>
                         <i className='fa-solid fa-circle-user' />
                         <div>
-                            {/* <label>{user.name}</label>
-                            <label>{user.emailPhone}</label> */}
+                            <label>Gustavo Valsechi</label>
+                            <label>gustavo@gmail.com</label>
                         </div>
                     </div>
-                    <i className='fa-solid fa-right-from-bracket' onClick={logout} />
+                    <button>
+                        <i className='fa-solid fa-right-from-bracket' onClick={logout} />
+                    </button>
                 </div>
             </footer>
         </Container>

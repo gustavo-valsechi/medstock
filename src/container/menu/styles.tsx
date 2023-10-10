@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const Container: any = styled.div`
+export const Container: any = styled.aside<{ show: boolean }>`
     height: 100vh;
     width: 24rem;
     border-right: 2px solid ${({ theme }) => theme.transparent_05};
@@ -8,13 +8,17 @@ export const Container: any = styled.div`
     flex-direction: column;
     justify-content: space-between;
     white-space: nowrap;
+    transition: ease .3s;
+    transform: ${({ show }) => show ? "translateX(0)" : "translateX(-24rem)"};
+    margin-left: ${({ show }) => show ? "0" : "-24rem"};
+    opacity: ${({ show }) => show ? "1" : "0"};
 
     @media(max-width: 650px) {
         width: 5rem;
     }
 
     header {
-        padding: 2rem 2rem 2rem 2.5rem;
+        padding: 2rem 2rem 2rem 1.6rem;
         display: flex;
         align-items: center;
         color: ${({ theme }) => theme.transparent_6};
@@ -37,16 +41,15 @@ export const Container: any = styled.div`
             padding: 0;
 
             .nav-item {
-                margin: .5rem 1.5rem;
-                padding: .3rem .8rem;
+                margin: .5rem 1.5rem .5rem 0;
+                padding: .5rem 1.3rem;
                 color: ${({ theme }) => theme.transparent_6};
                 font-size: .9rem;
                 font-weight: 500;
                 cursor: pointer;
                 display: flex;
                 align-items: center;
-                transition: ease .3s;
-                border-radius: 3px;
+                transition: color ease .3s;
                 border-left: 5px solid transparent;
 
                 @media(max-width: 650px) {
@@ -108,7 +111,7 @@ export const Container: any = styled.div`
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 1rem;
+            padding: .8rem 1rem;
             border-radius: 5px;
             background: ${({ theme }) => theme.transparent_05};
             color: ${({ theme }) => theme.transparent_6};
@@ -154,8 +157,18 @@ export const Container: any = styled.div`
                 }
             }
 
-            i:last-child {
+            button {
+                padding: .3rem .6rem;
+                border: 1px solid ${({ theme }) => theme.tertiary};
+                background: ${({ theme }) => theme.tertiary};
+                color: ${({ theme }) => theme.secondary};
+                border-radius: 5px;
                 cursor: pointer;
+                transition: ease .3;
+
+                &:hover {
+                    opacity: .9;
+                }
             }
         }
     }

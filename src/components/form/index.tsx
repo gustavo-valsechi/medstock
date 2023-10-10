@@ -22,16 +22,26 @@ export function Form(props: IForm) {
 
     type Schema = TypeOf<typeof props.validation>
 
+    const initialValues = () => {
+        const values = {}
+
+        _.forEach(props.inputs, (data) => {
+            values[data.name] = ""
+        })
+
+        return values
+    }
+
     const formik = useFormik<Schema>({
-        initialValues: props.initialValues,
+        initialValues: props.initialValues || initialValues(),
         onSubmit: props.onSubmit,
-        validationSchema: toFormikValidationSchema(props.validation)
+        validationSchema: props.validation ? toFormikValidationSchema(props.validation) : undefined
     })
 
     useEffect(() => {
         if (props.clearWhen) return formik.resetForm()
 
-        formik.setValues(props.initialValues)
+        formik.setValues(props.initialValues || initialValues())
     }, [props.clearWhen, props.initialValues])
 
     const component = (data: any, index: number) => {

@@ -6,7 +6,56 @@ import Refactoring from "../../utils"
 import Image from "next/image"
 import _ from "lodash"
 
-export function Table(props: any) {
+interface IColumn {
+  action?: {
+    disabled?: boolean
+    position?: string
+    function: (data?: any) => void
+    icon?: string
+  }
+}
+
+interface IRow {
+  actions?: Array<{
+    disabled?: boolean
+    position?: string
+    function: (data?: any) => void
+    icon?: string
+  }>
+  image?: (data: any) => void | {
+    value?: (data: any) => void
+    icon?: string
+  }
+  style?: object
+  mask?: (data: any) => void
+  custom?: (data: any) => void
+  name?: string
+}
+
+interface ITable {
+  content: Array<any>
+  loading: boolean | {
+    is?: boolean
+    items?: Array<any>
+  }
+  options: Array<{
+    column: IColumn | string
+    row: IRow | string
+  }>
+  notFound?: {
+    title: string
+    message: string
+  }
+  paginate?: {
+    total: number
+    page: {
+      value: number
+      set: (value: number) => void
+    }
+  }
+}
+
+export function Table(props: ITable) {
 
   const limit = (value: string) => Refactoring.format.stringLimit(value, 30)
 
@@ -19,30 +68,30 @@ export function Table(props: any) {
               {_.map(props.options, (option, index: number) =>
                 <th key={index}>
                   <div
-                    className={`table-temp ${option.column?.action
-                      ? `action ${option.column?.action?.position
-                        ? option.column?.action?.position
+                    className={`table-temp ${option.column?.["action"]
+                      ? `action ${option.column?.["action"]?.position
+                        ? option.column?.["action"]?.position
                         : ""}`
                       : ""}`
                     }
                   >
-                    {option.column?.action
+                    {!!option.row?.["actions"]
                       ? <button
                         className="button"
-                        onClick={option.column?.action?.function}
-                        disabled={option.column?.action?.disabled}
+                        onClick={option.column?.["action"]?.function}
+                        disabled={option.column?.["action"]?.disabled}
                       >
-                        <i className={option.column?.action?.icon || 'fa-solid fa-eye'} />
+                        <i className={option.column?.["action"]?.icon || 'fa-solid fa-eye'} />
                       </button>
-                      : option.column}
+                      : _.isString(option.column) ? option.column : ""}
                   </div>
                 </th>
               )}
             </tr>
           </thead>
           <tbody>
-            {props.loading?.is || props.loading
-              ? _.map(props.loading?.items || [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], (data, key: number) =>
+            {props.loading?.["is"] || props.loading
+              ? _.map(props.loading?.["items"] || [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], (data, key: number) =>
                 <tr key={key}>
                   {_.map(props.options, (data, index: number) => (
                     <td key={index}>
@@ -67,14 +116,14 @@ export function Table(props: any) {
                       <div
                         className={`
                           table-temp 
-                          ${option.row?.actions ? "action" : ""} 
-                          ${option.row?.image ? "image" : ""}
+                          ${option.row?.["actions"] ? "action" : ""} 
+                          ${option.row?.["image"] ? "image" : ""}
                         `}
-                        style={option.row?.style}
+                        style={option.row?.["style"]}
                       >
-                        {option.row?.actions
+                        {!!option.row?.["actions"]
                           ? <div className="actions">
-                            {_.map(option.row.actions, (action, index) =>
+                            {_.map(option.row?.["actions"], (action, index) =>
                               <button
                                 key={index}
                                 className={`
@@ -87,22 +136,22 @@ export function Table(props: any) {
                                 <i className={action.icon || 'fa-solid fa-eye'} />
                               </button>)}
                           </div>
-                          : option.row?.image
+                          : option.row?.["image"]
                             ? <div className="avatar">
-                              {option.row?.image?.value ? option.row?.image?.value(data) : option.row?.image(data)
+                              {option.row?.["image"]?.value ? option.row?.["image"]?.value(data) : option.row?.["image"](data)
                                 ? <Image
-                                  src={option.row?.image?.value ? option.row?.image?.value(data) : option.row?.image(data)}
+                                  src={option.row?.["image"]?.value ? option.row?.["image"]?.value(data) : option.row?.["image"](data)}
                                   alt=""
                                 />
-                                : <i className={option.row?.image?.icon || "fa-solid fa-circle-user"} />}
+                                : <i className={option.row?.["image"]?.icon || "fa-solid fa-circle-user"} />}
                             </div>
                             : <div className="row-content">
-                              {option.row?.mask
-                                ? option.row?.mask(data[option.row?.name]) || "---"
-                                : option.row?.custom
-                                  ? option.row?.custom(data[option.row?.name] || data)
-                                  : data[option.row?.name || option.row]
-                                    ? limit(data[option.row?.name || option.row])
+                              {option.row?.["mask"]
+                                ? option.row?.["mask"](data[option.row?.["name"]]) || "---"
+                                : option.row?.["custom"]
+                                  ? option.row?.["custom"](data[option.row?.["name"]] || data)
+                                  : data[option.row?.["name"] || option.row]
+                                    ? limit(data[option.row?.["name"] || option.row])
                                     : '---'}
                             </div>}
                       </div>
