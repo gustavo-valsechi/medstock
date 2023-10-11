@@ -47,7 +47,7 @@ export default function Register(props: any) {
 
     return (
         <Container>
-            <div>
+            <div className="container">
                 <Logo size="1.3" />
                 <div className="content">
                     <div className="content-title">Fazer cadastro</div>

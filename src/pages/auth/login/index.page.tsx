@@ -28,7 +28,7 @@ export default function Login(props: any) {
 
     return (
         <Container>
-            <div>
+            <div className="container">
                 <Logo size="1.3" />
                 <div className="content">
                     <div className="content-title">Fazer login</div>

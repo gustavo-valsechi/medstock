@@ -18,6 +18,8 @@ export const Container: any = styled.aside<{ show: boolean }>`
 
     @media(max-width: 650px) {
         width: 5rem;
+        transform: ${({ show }) => show ? "translateX(0)" : "translateX(-5rem)"};
+        margin-left: ${({ show }) => show ? "0" : "-5rem"};
     }
 
     header {
