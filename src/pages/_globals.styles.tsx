@@ -1,9 +1,11 @@
-import { createGlobalStyle } from "styled-components"
+"use client"
 
+import { createGlobalStyle } from "styled-components"
 
 export const GlobalStyle = createGlobalStyle`
     html, body, input, select, textarea, div, button {
         font-family: 'Poppins', sans-serif;
+        -webkit-tap-highlight-color: rgba(255, 255, 255, 0); 
     } 
 
     html, body {
@@ -23,18 +25,18 @@ export const GlobalStyle = createGlobalStyle`
 
     div {
         &::-webkit-scrollbar-track {
-        background-color: transparent;
+            background-color: transparent;
         }
 
         &::-webkit-scrollbar {
-        width: 6px;
-        border-radius: 1rem;
+            width: 6px;
+            border-radius: 1rem;
         }
 
         &::-webkit-scrollbar-thumb {
-        background: rgb(0, 0, 0, 0.08);
-        width: 6px;
-        border-radius: 1rem;
+            background: rgb(0, 0, 0, 0.08);
+            width: 6px;
+            border-radius: 1rem;
         }
     }
 `

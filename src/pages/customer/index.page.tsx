@@ -46,7 +46,7 @@ export default function Customer({ customers }) {
       />
       <div className='templates-label'>
         <span>Clientes</span>
-        <p>Todos os seus clientes e seus dados serão listados nesta página, na qual você poderá adicionar novos clientes ou atualizar as informações existentes.</p>
+        <p>Fidelize seus clientes cadastrando-os na plataforma. Com os contatos salvos, a comunicação futura torna-se mais fácil e eficaz, fortalecendo assim o relacionamento com sua clientela.</p>
       </div>
       <Table
         loading={router.isFallback}

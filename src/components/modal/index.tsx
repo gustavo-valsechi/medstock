@@ -4,9 +4,24 @@ import _ from 'lodash'
 
 import { Button } from '../form/button'
 
-export function Modal(props: any) {
+interface IModal {
+    toggle: boolean
+    onClose?: () => void
+    title?: string
+    header?: {
+        title: string
+        icon: string
+    }
+    buttons?: Array<any>
+    children?: React.ReactNode
+    center?: boolean
+    right?: boolean
+    left?: boolean
+}
+
+export function Modal(props: IModal) {
     return (
-        <Container toggle={props.toggle} {...props}>
+        <Container {...props}>
             <div className="modal-nummus-back" onClick={props.onClose} />
             <div className="modal-nummus-container">
                 {(!!props.title || !!props.header) &&

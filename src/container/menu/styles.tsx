@@ -1,3 +1,5 @@
+"use client"
+
 import styled from 'styled-components'
 
 export const Container: any = styled.aside<{ show: boolean }>`
@@ -12,19 +14,20 @@ export const Container: any = styled.aside<{ show: boolean }>`
     transform: ${({ show }) => show ? "translateX(0)" : "translateX(-24rem)"};
     margin-left: ${({ show }) => show ? "0" : "-24rem"};
     opacity: ${({ show }) => show ? "1" : "0"};
+    user-select: none;
 
     @media(max-width: 650px) {
         width: 5rem;
     }
 
     header {
-        padding: 2rem 2rem 2rem 1.6rem;
+        padding: 2rem 2rem 2.5rem 1.6rem;
         display: flex;
         align-items: center;
         color: ${({ theme }) => theme.transparent_6};
 
         @media(max-width: 650px) {
-            padding: 2rem .5rem 2rem 1.3rem;
+            padding: 2rem .5rem 2rem 1.2rem;
         }
 
         label {
@@ -53,7 +56,8 @@ export const Container: any = styled.aside<{ show: boolean }>`
                 border-left: 5px solid transparent;
 
                 @media(max-width: 650px) {
-                    margin: .5rem;
+                    margin: .5rem 0;
+                    padding: .8rem 1.3rem;
                 }
 
                 &.target {
@@ -118,17 +122,16 @@ export const Container: any = styled.aside<{ show: boolean }>`
 
             @media(max-width: 650px) {
                 padding: .5rem;
+                flex-direction: column;
                 justify-content: center;
+                background: transparent;
+                gap: 1.5rem;
             }
 
             .profile-content {
                 display: flex;
                 align-items: center;
                 gap: 1rem;
-
-                @media(max-width: 650px) {
-                    display: none;
-                }
 
                 i {
                     font-size: 2rem;
@@ -138,6 +141,10 @@ export const Container: any = styled.aside<{ show: boolean }>`
                     display: flex;
                     flex-direction: column;
                     justify-content: center;
+
+                    @media(max-width: 650px) {
+                        display: none;
+                    }
 
                     label {
                         width: 9rem;

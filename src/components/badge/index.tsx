@@ -1,13 +1,17 @@
 import React from "react"
 import { Container } from "./styles"
 
-export function Badge(props: any) {
+interface IBadge {
+  value: string
+}
+
+export function Badge(props: IBadge) {
 
   const status: any = {
-    ENVIADO: '${({ theme }) => theme.positive}',
-    ENTREGUE: '${({ theme }) => theme.positive}',
-    ABERTO: '${({ theme }) => theme.positive}',
-    FALHA: '${({ theme }) => theme.negative}',
+    ENVIADO: 'positive',
+    ENTREGUE: 'positive',
+    ABERTO: 'positive',
+    FALHA: 'negative',
   }
 
   return (

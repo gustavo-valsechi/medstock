@@ -4,17 +4,17 @@ import { Container } from './styles'
 import { useRouter } from 'next/router'
 import Refactoring from '../../utils'
 
-import { getCustomers } from '../api/customer'
+import { getSuppliers } from '../api/supplier'
 
 import ModalCustomer from './modal'
 
-export default function Supplier({ customers }) {
+export default function Supplier({ suppliers }) {
   const router = useRouter()
 
   const [modal, setModal] = useState({ is: false, content: {} })
   const [page, setPage] = useState(0)
   const [loading, setLoading] = useState(false)
-  const [content, setContent] = useState(customers)
+  const [content, setContent] = useState(suppliers)
 
   const phone = (value: string) => Refactoring.mask.phone(value)
 
@@ -22,7 +22,7 @@ export default function Supplier({ customers }) {
     setPage(page || 0)
     setLoading(true)
 
-    const data = await getCustomers({
+    const data = await getSuppliers({
       offset: page,
       order: { dhOperation: 'DESC' }
     })
@@ -46,7 +46,7 @@ export default function Supplier({ customers }) {
       />
       <div className='templates-label'>
         <span>Fornecedores</span>
-        <p>Todos os seus clientes e seus dados serão listados nesta página, na qual você poderá adicionar novos clientes ou atualizar as informações existentes.</p>
+        <p>Aprimore o reabastecimento do seu estoque ao incluir os fornecedores dos seus produtos.</p>
       </div>
       <Table
         loading={router.isFallback}
@@ -59,8 +59,8 @@ export default function Supplier({ customers }) {
           }
         }}
         notFound={{
-          title: 'Nenhum cliente encontrado',
-          message: 'Adicione um cliente para aparecer algum registro'
+          title: 'Nenhum fornecedor encontrado',
+          message: 'Adicione um fornecedor para aparecer algum registro'
         }}
         options={[
           {
@@ -90,10 +90,10 @@ export default function Supplier({ customers }) {
 
 export async function getServerSideProps() {
 
-  const customers = await getCustomers({
+  const suppliers = await getSuppliers({
     offset: 0,
     order: { name: 'ASC' }
   }) || {}
 
-  return { props: { customers } }
+  return { props: { suppliers } }
 }

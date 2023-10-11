@@ -1,44 +1,47 @@
-import React, { useCallback, useEffect, useRef } from "react"
+import React, { useCallback } from "react"
 import { Container } from "./styles"
-import { useField } from "@unform/core"
 import { Label } from "../label"
 import _ from "lodash"
 
-export function Textarea(props: any) {
-    const textareaRef: any = useRef({})
+interface ITextarea {
+    className?: string
+    label?: string
+    name: string
+    value: string
+    mask?: (value: string) => void
+    onChange: (event: any) => void
+    maxLength?: number
+    rows?: number
+    error: string
+    disabled?: boolean
+}
 
-    const { fieldName, registerField, defaultValue, error } = useField(props.name)
+export function Textarea(props: ITextarea) {
 
-    useEffect(() => {
-        registerField({
-            name: fieldName,
-            ref: textareaRef.current,
-            path: 'value'
-        })
-    }, [fieldName, registerField])
-
-    const onChangeText = useCallback((event: any) => {
+    const onChange = (event: any) => {
         const value: any = event.target.value || ''
 
-        if (textareaRef.current) textareaRef.current.value = props.mask ? props.mask(value) : value
+        event.target.value = props.mask ? props.mask(value) : value
 
-        if (props.onChange) props.onChange(value)
-    }, [props.onChange, textareaRef, props.mask])
+        if (props.onChange) props.onChange(event)
+    }
 
     return (
-        <Container className={props.className} error={error}>
+        <Container className={props.className} error={props.error}>
             {!!props.label && <Label>{props.label}</Label>}
             <div className="textarea-content">
                 <textarea
-                    ref={textareaRef}
-                    defaultValue={defaultValue || props.defaultValue}
-                    onChange={onChangeText}
+                    onChange={onChange}
                     maxLength={props.maxLength}
                     rows={props.rows || 5}
-                    {..._.omit(props, ['defaultValue', 'maxLength', 'className', 'onChange', 'mask', 'rows'])}
+                    {..._.omit(props, ['maxLength', 'className', 'onChange', 'mask', 'rows'])}
                 />
             </div>
-            {!!error && <div className="input-error">{error}</div>}
+            {!!props.error && (
+                <div className="input-error">
+                    {props.error}
+                </div>
+            )}
         </Container>
     )
 }

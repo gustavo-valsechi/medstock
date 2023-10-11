@@ -4,7 +4,12 @@ import Image from "next/image"
 
 import logo from "@/assets/logo.png"
 
-export function Logo(props: any) {
+interface ILogo {
+  opacity?: string | number
+  size?: string | number
+}
+
+export function Logo(props: ILogo) {
   return (
     <Container {...props}>
       <div className="logo-container">

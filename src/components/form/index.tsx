@@ -1,9 +1,9 @@
-import React, { useEffect } from "react"
+import React, { useCallback, useEffect } from "react"
 import { Container } from "./styles"
 import { Button } from "./button"
 import { Input } from "./input"
-// import { Textarea } from "./textarea"
-// import { DateTime } from "./datetime"
+import { Textarea } from "./textarea"
+import { DateTime } from "./datetime"
 import { toFormikValidationSchema } from "zod-formik-adapter"
 import { useFormik } from "formik"
 import { TypeOf } from "zod"
@@ -22,7 +22,9 @@ export function Form(props: IForm) {
 
     type Schema = TypeOf<typeof props.validation>
 
-    const initialValues = () => {
+    const initialValues = useCallback(() => {
+        if (props.initialValues) return props.initialValues
+
         const values = {}
 
         _.forEach(props.inputs, (data) => {
@@ -30,26 +32,30 @@ export function Form(props: IForm) {
         })
 
         return values
-    }
+    }, [props.initialValues, props.inputs])
 
     const formik = useFormik<Schema>({
-        initialValues: props.initialValues || initialValues(),
+        initialValues: initialValues(),
         onSubmit: props.onSubmit,
         validationSchema: props.validation ? toFormikValidationSchema(props.validation) : undefined
     })
 
     useEffect(() => {
+        if (formik.values == formik.initialValues) return
+
         if (props.clearWhen) return formik.resetForm()
 
-        formik.setValues(props.initialValues || initialValues())
-    }, [props.clearWhen, props.initialValues])
+        if (formik.initialValues) return
+
+        formik.setValues(initialValues())
+    }, [props.clearWhen, initialValues, formik])
 
     const component = (data: any, index: number) => {
         const TYPES = {
-            // "textarea": Textarea,
+            "textarea": Textarea,
             "password": Input,
             "text": Input,
-            // "datetime": DateTime,
+            "datetime": DateTime,
         }
 
         const TypeComponent = TYPES[data.type || "text"]

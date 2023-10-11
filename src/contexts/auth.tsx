@@ -20,6 +20,7 @@ export const AuthProvider = ({ children }) => {
         if (!token) setToken(tokenStorage)
 
         if (_.includes(router.route, "auth")) router.push("/order")
+        // eslint-disable-next-line
     }, [token])
 
     const logout = () => {

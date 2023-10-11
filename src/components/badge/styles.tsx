@@ -1,6 +1,8 @@
+"use client"
+
 import styled from "styled-components"
 
-export const Container = styled.div`
+export const Container = styled.div<{ color: string }>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -11,7 +13,7 @@ export const Container = styled.div`
   div {
     position: relative;
     z-index: 1;
-    color: ${(props: any) => props.color};
+    color: ${({ theme, color }) => theme[color]};
     font-size: .75rem;
     font-weight: 500;
     text-transform: lowercase;
@@ -25,7 +27,7 @@ export const Container = styled.div`
     width: 100%;
     height: 100%;
     border-radius: 2rem;
-    background: ${(props: any) => props.color};
+    background: ${({ theme, color }) => theme[color]};
     opacity: .2;
   }
 `;

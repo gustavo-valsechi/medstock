@@ -4,17 +4,17 @@ import { Container } from './styles'
 import { useRouter } from 'next/router'
 import Refactoring from '../../utils'
 
-import { getCustomers } from '../api/customer'
+import { getOrders } from '../api/order'
 
 import ModalCustomer from './modal'
 
-export default function Order({ customers }) {
+export default function Order({ orders }) {
   const router = useRouter()
 
   const [modal, setModal] = useState({ is: false, content: {} })
   const [page, setPage] = useState(0)
   const [loading, setLoading] = useState(false)
-  const [content, setContent] = useState(customers)
+  const [content, setContent] = useState(orders)
 
   const phone = (value: string) => Refactoring.mask.phone(value)
 
@@ -22,7 +22,7 @@ export default function Order({ customers }) {
     setPage(page || 0)
     setLoading(true)
 
-    const data = await getCustomers({
+    const data = await getOrders({
       offset: page,
       order: { dhOperation: 'DESC' }
     })
@@ -46,7 +46,7 @@ export default function Order({ customers }) {
       />
       <div className='templates-label'>
         <span>Pedidos</span>
-        <p>Todos os seus clientes e seus dados serão listados nesta página, na qual você poderá adicionar novos clientes ou atualizar as informações existentes.</p>
+        <p>Crie pedidos de venda com facilidade e eficiência, enquanto gerencia seu caixa de forma rápida e descomplicada.</p>
       </div>
       <Table
         loading={router.isFallback}
@@ -59,8 +59,8 @@ export default function Order({ customers }) {
           }
         }}
         notFound={{
-          title: 'Nenhum cliente encontrado',
-          message: 'Adicione um cliente para aparecer algum registro'
+          title: 'Nenhum pedido encontrado',
+          message: 'Adicione um pedido de venda para aparecer algum registro'
         }}
         options={[
           {
@@ -90,10 +90,10 @@ export default function Order({ customers }) {
 
 export async function getServerSideProps() {
 
-  const customers = await getCustomers({
+  const orders = await getOrders({
     offset: 0,
     order: { name: 'ASC' }
   }) || {}
 
-  return { props: { customers } }
+  return { props: { orders } }
 }
