@@ -12,6 +12,7 @@ interface ISelect {
     options: Array<any>
     error: string
     disabled?: boolean
+    onFocus: (value: any) => void
 }
 
 export function Select(props: ISelect) {
@@ -26,7 +27,10 @@ export function Select(props: ISelect) {
                     onChange={props.onChange}
                     onMouseDown={() => setFocus(!focus)}
                     onBlur={() => setFocus(false)}
-                    {..._.omit(props, ['className', 'onChange', 'options', 'onMouseDown', 'onBlur'])}
+                    onFocus={() => {
+                        if (props.onFocus) props.onFocus(props.name)
+                    }}
+                    {..._.omit(props, ['className', 'onChange', 'onFocus', 'options', 'onMouseDown', 'onBlur'])}
                 >
                     {_.map(props.options, (data, index) =>
                         <option

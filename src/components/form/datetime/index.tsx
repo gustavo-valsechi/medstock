@@ -10,6 +10,7 @@ interface IDateTime {
     name: string
     value: string
     mask?: (value: string) => void
+    onFocus: (value: any) => void
     onChange: (event: any) => void
     maxLength?: number
     error: string
@@ -35,6 +36,9 @@ export function DateTime(props: IDateTime) {
                     type="datetime-local"
                     onChange={onChange}
                     maxLength={props.maxLength || 50}
+                    onFocus={() => {
+                        if (props.onFocus) props.onFocus(props.name)
+                    }}
                     {..._.omit(props, ['maxLength', 'className', 'onChange', 'mask', 'type'])}
                 />
             </div>

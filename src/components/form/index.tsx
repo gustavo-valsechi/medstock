@@ -1,17 +1,16 @@
-import React, { useCallback, useEffect } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import { Container } from "./styles"
 import { Button } from "./button"
 import { Input } from "./input"
-import { Textarea } from "./textarea"
-import { DateTime } from "./datetime"
+import { Select } from "./select"
 import { toFormikValidationSchema } from "zod-formik-adapter"
 import { useFormik } from "formik"
 import { TypeOf } from "zod"
+import * as z from "zod"
 import _ from "lodash"
 
 interface IForm {
     initialValues?: any
-    validation?: any
     onSubmit: (values: any, actions?: any) => void
     clearWhen?: boolean
     inputs: Array<any>
@@ -20,12 +19,13 @@ interface IForm {
 
 export function Form(props: IForm) {
 
-    type Schema = TypeOf<typeof props.validation>
+    const [focus, setFocus] = useState("")
+    const [submitted, setSubmitted] = useState(false)
 
     const initialValues = useCallback(() => {
         if (props.initialValues) return props.initialValues
 
-        const values = {}
+        const values: any = {}
 
         _.forEach(props.inputs, (data) => {
             values[data.name] = ""
@@ -34,14 +34,28 @@ export function Form(props: IForm) {
         return values
     }, [props.initialValues, props.inputs])
 
-    const formik = useFormik<Schema>({
+    const validation = () => {
+        const validations: any = {}
+
+        _.forEach(props.inputs, (data) => {
+            if (!data.validation) return
+
+            validations[data.name] = data.validation
+        })
+
+        return z.object(validations)
+    }
+
+    const validations = validation()
+
+    const formik = useFormik<TypeOf<typeof validations>>({
         initialValues: initialValues(),
-        onSubmit: props.onSubmit,
-        validationSchema: props.validation ? toFormikValidationSchema(props.validation) : undefined
+        validationSchema: validations ? toFormikValidationSchema(validations) : undefined,
+        onSubmit: props.onSubmit
     })
 
     useEffect(() => {
-        if (formik.values == formik.initialValues) return
+        if (formik.values === formik.initialValues) return
 
         if (props.clearWhen) return formik.resetForm()
 
@@ -50,12 +64,16 @@ export function Form(props: IForm) {
         formik.setValues(initialValues())
     }, [props.clearWhen, initialValues, formik])
 
+    useEffect(() => {
+        if (!formik.isSubmitting) return
+
+        setSubmitted(true)
+    }, [formik])
+
     const component = (data: any, index: number) => {
-        const TYPES = {
-            "textarea": Textarea,
-            "password": Input,
+        const TYPES: any = {
             "text": Input,
-            "datetime": DateTime,
+            "select": Select,
         }
 
         const TypeComponent = TYPES[data.type || "text"]
@@ -63,9 +81,17 @@ export function Form(props: IForm) {
         return <TypeComponent
             key={index}
             value={formik.values?.[data.name]}
-            error={formik.errors?.[data.name]}
+            error={focus
+                ? focus === data.name ? formik.errors?.[focus] : null
+                : formik.errors?.[data.name]
+            }
+            onFocus={submitted ? undefined : setFocus}
             onChange={formik.handleChange}
-            {...data}
+            onBlur={() => {
+                if (!submitted) formik.setErrors({})
+                setFocus("")
+            }}
+            {..._.omit(data, ["validation"])}
         />
     }
 

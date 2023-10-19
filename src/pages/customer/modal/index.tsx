@@ -13,16 +13,6 @@ export default function ModalCustomer(props: any) {
     const phone = (value: string) => Refactoring.mask.phone(value)
     const removePhone = (value: string) => Refactoring.removeMask.phone(value)
 
-    const schema = z.object({
-        name: z.string({
-            required_error: "Please enter your name",
-        }),
-        email: z.string().email("Please enter a valid email"),
-        phone: z.string({
-            required_error: "Please enter your name",
-        }),
-    })
-
     const onClose = () => {
         props.modal.set({ is: false, content: {} })
     }
@@ -45,7 +35,6 @@ export default function ModalCustomer(props: any) {
                 <div className="body">
                     <Form
                         onSubmit={onSubmit}
-                        validation={schema}
                         clearWhen={!props.modal.value?.content?.uuid}
                         initialValues={{
                             name: props.modal.value?.content?.name || '',
@@ -56,18 +45,24 @@ export default function ModalCustomer(props: any) {
                             {
                                 name: "name",
                                 label: "Nome",
-                                disabled: saving
+                                disabled: saving,
+                                validation: z.string({ required_error: "Campo obrigatório!" }),
+                                maxLenght: 255
                             },
                             {
                                 name: "phone",
                                 label: "Telefone",
                                 mask: phone,
-                                disabled: saving
+                                disabled: saving,
+                                validation: z.string({ required_error: "Campo obrigatório!" }),
+                                maxLenght: 15
                             },
                             {
                                 name: "email",
                                 label: "E-mail",
-                                disabled: saving
+                                disabled: saving,
+                                validation: z.string().email("E-mail inválido!"),
+                                maxLenght: 255
                             },
                         ]}
                         buttons={[

@@ -12,6 +12,7 @@ interface IInputFile {
     onChange: (event: any) => void
     disabled?: boolean
     error: string
+    onFocus: (value: string) => void
 }
 
 export function InputFile(props: IInputFile) {
@@ -33,6 +34,9 @@ export function InputFile(props: IInputFile) {
                 disabled={props.disabled}
                 onChange={(e) => readImage(e.target.files?.[0])}
                 name={props.name}
+                onFocus={() => {
+                    if (props.onFocus) props.onFocus(props.name)
+                }}
             />
             {!!props.label && <Label>{props.label}</Label>}
             <div className="image-content" onClick={() => inputRef.current.click()}>

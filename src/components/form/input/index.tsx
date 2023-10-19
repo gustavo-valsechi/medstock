@@ -10,9 +10,10 @@ interface IInput {
     value: string
     mask?: (value: string) => void
     onChange: (event: any) => void
-    maxLength?: number
+    maxLenght?: number
     error: string
     disabled?: boolean
+    onFocus: (value: any) => void
 }
 
 export function Input(props: IInput) {
@@ -31,8 +32,11 @@ export function Input(props: IInput) {
             <div className="input-content">
                 <input
                     onChange={onChange}
-                    maxLength={props.maxLength || 255}
-                    {..._.omit(props, ['maxLength', 'className', 'onChange', 'mask'])}
+                    maxLength={props.maxLenght || 255}
+                    onFocus={() => {
+                        if (props.onFocus) props.onFocus(props.name)
+                    }}
+                    {..._.omit(props, ['maxLength', 'onFocus', 'className', 'onChange', 'mask'])}
                 />
             </div>
             {!!props.error && (
