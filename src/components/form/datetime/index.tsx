@@ -35,11 +35,11 @@ export function DateTime(props: IDateTime) {
                 <input
                     type="datetime-local"
                     onChange={onChange}
-                    maxLength={props.maxLength || 50}
+                    // maxLength={props.maxLength || 50}
                     onFocus={() => {
                         if (props.onFocus) props.onFocus(props.name)
                     }}
-                    {..._.omit(props, ['maxLength', 'className', 'onChange', 'mask', 'type'])}
+                    {..._.omit(props, ['maxLength', 'className', 'onChange', 'mask', 'type', 'value'])}
                 />
             </div>
             {!!props.error && (

@@ -30,7 +30,7 @@ export function Select(props: ISelect) {
                     onFocus={() => {
                         if (props.onFocus) props.onFocus(props.name)
                     }}
-                    {..._.omit(props, ['className', 'onChange', 'onFocus', 'options', 'onMouseDown', 'onBlur'])}
+                    {..._.omit(props, ['className', 'onChange', 'onFocus', 'options', 'onMouseDown', 'onBlur', 'value'])}
                 >
                     {_.map(props.options, (data, index) =>
                         <option

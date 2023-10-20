@@ -34,7 +34,7 @@ export function Textarea(props: ITextarea) {
                     onChange={onChange}
                     maxLength={props.maxLength}
                     rows={props.rows || 5}
-                    {..._.omit(props, ['maxLength', 'className', 'onChange', 'mask', 'rows'])}
+                    {..._.omit(props, ['maxLength', 'className', 'onChange', 'mask', 'rows', 'value'])}
                 />
             </div>
             {!!props.error && (

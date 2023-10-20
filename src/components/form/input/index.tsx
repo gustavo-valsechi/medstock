@@ -19,6 +19,8 @@ interface IInput {
 export function Input(props: IInput) {
 
     const onChange = (event: any) => {
+        console.log(event);
+
         const value: any = event.target.value || ''
 
         event.target.value = props.mask ? props.mask(value) : value
@@ -36,7 +38,7 @@ export function Input(props: IInput) {
                     onFocus={() => {
                         if (props.onFocus) props.onFocus(props.name)
                     }}
-                    {..._.omit(props, ['maxLength', 'onFocus', 'className', 'onChange', 'mask'])}
+                    {..._.omit(props, ['onFocus', 'className', 'onChange', 'mask', 'value'])}
                 />
             </div>
             {!!props.error && (
