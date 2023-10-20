@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import type { AppProps } from 'next/app'
 import { GlobalStyle } from './_globals.styles'
 import { ThemeProvider } from '@/contexts/theme'
 import { AuthProvider } from '@/contexts/auth'
 import { StyleSheetManager } from 'styled-components'
+import { LoadingPage } from '@/components'
 import isPropValid from "@emotion/is-prop-valid"
 import Head from 'next/head'
 import _ from 'lodash'
@@ -11,6 +12,15 @@ import _ from 'lodash'
 import Container from "@/container"
 
 export default function App({ Component, pageProps }: AppProps) {
+
+    const [loading, setLoading] = useState(true)
+
+    useEffect(() => {
+        setTimeout(() => {
+            setLoading(false)
+        }, 300)
+    }, [])
+
     return (
         <>
             <Head>
@@ -39,6 +49,7 @@ export default function App({ Component, pageProps }: AppProps) {
                                 : true;
                         }}
                     >
+                        {!!loading && <LoadingPage />}
                         <GlobalStyle />
                         <Container>
                             <Component {...pageProps} />

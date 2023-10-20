@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react"
 import { Container } from "./styles"
-import { Loading } from "../loading"
+import { Loading } from "../loading-bar"
 import { Paginate } from "./paginate"
 import Refactoring from "../../utils"
 import Image from "next/image"

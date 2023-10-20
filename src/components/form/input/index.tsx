@@ -19,8 +19,6 @@ interface IInput {
 export function Input(props: IInput) {
 
     const onChange = (event: any) => {
-        console.log(event);
-
         const value: any = event.target.value || ''
 
         event.target.value = props.mask ? props.mask(value) : value
