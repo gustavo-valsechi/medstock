@@ -13,11 +13,6 @@ export default function Login(props: any) {
 
     const [loading, setLoading] = useState(false)
 
-    const schema = z.object({
-        email: z.string({ required_error: "Campo obrigatório!" }).email("E-mail inválido!"),
-        password: z.string({ required_error: "Campo obrigatório!" }),
-    })
-
     async function onSubmit(credentials: any) {
         setLoading(true)
 
@@ -33,11 +28,10 @@ export default function Login(props: any) {
                 <div className="content">
                     <div className="content-title">Fazer login</div>
                     <Form
-                        validation={schema}
                         onSubmit={onSubmit}
                         inputs={[
-                            { label: "E-mail", name: "email" },
-                            { label: "Senha", name: "password", type: "password" },
+                            { label: "E-mail", name: "email", validation: z.string({ required_error: "Campo obrigatório!" }).email("E-mail inválido!") },
+                            { label: "Senha", name: "password", type: "password", validation: z.string({ required_error: "Campo obrigatório!" }) },
                         ]}
                         buttons={[{
                             type: "submit",

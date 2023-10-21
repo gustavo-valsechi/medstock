@@ -68,6 +68,7 @@ export function Form(props: IForm) {
         if (!formik.isSubmitting) return
 
         setSubmitted(true)
+        setFocus("")
     }, [formik])
 
     const component = (data: any, index: number) => {
@@ -92,7 +93,7 @@ export function Form(props: IForm) {
             onChange={formik.handleChange}
             onBlur={() => {
                 if (!submitted) formik.setErrors({})
-                setFocus("")
+                if (!submitted) setFocus("")
             }}
             {..._.omit(data, ["validation"])}
         />
