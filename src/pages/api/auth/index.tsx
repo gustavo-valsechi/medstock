@@ -1,4 +1,5 @@
 import { api } from "../../../services"
+import { toast } from "react-hot-toast"
 import _ from "lodash"
 
 export async function login(credentials: any) {
@@ -10,5 +11,15 @@ export async function login(credentials: any) {
         return token
     } catch (error) {
         console.error(error)
+        toast.success(error.message)
+    }
+}
+
+export async function register(body: any) {
+    try {
+        toast.success("Conta cadastrada com sucesso!")
+    } catch (error) {
+        console.error(error)
+        toast.success(error.message)
     }
 }

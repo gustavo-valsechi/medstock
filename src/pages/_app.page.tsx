@@ -5,9 +5,12 @@ import { ThemeProvider } from '@/contexts/theme'
 import { AuthProvider } from '@/contexts/auth'
 import { StyleSheetManager } from 'styled-components'
 import { LoadingPage } from '@/components'
+import { Toaster } from 'react-hot-toast'
 import isPropValid from "@emotion/is-prop-valid"
 import Head from 'next/head'
 import _ from 'lodash'
+
+import "../components/loading/page/styles.css"
 
 import Container from "@/container"
 
@@ -18,7 +21,7 @@ export default function App({ Component, pageProps }: AppProps) {
     useEffect(() => {
         setTimeout(() => {
             setLoading(false)
-        }, 300)
+        }, 1000)
     }, [])
 
     return (
@@ -54,6 +57,11 @@ export default function App({ Component, pageProps }: AppProps) {
                         <Container>
                             <Component {...pageProps} />
                         </Container>
+                        <Toaster
+                            position="top-center"
+                            reverseOrder={false}
+                            containerStyle={{ fontSize: ".85rem", fontWeight: "500" }}
+                        />
                     </StyleSheetManager>
                 </AuthProvider>
             </ThemeProvider>

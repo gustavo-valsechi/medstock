@@ -73,10 +73,13 @@ export function Form(props: IForm) {
     const component = (data: any, index: number) => {
         const TYPES: any = {
             "text": Input,
+            "password": Input,
             "select": Select,
         }
 
         const TypeComponent = TYPES[data.type || "text"]
+
+        if (!TypeComponent) return <></>
 
         return <TypeComponent
             key={index}

@@ -1,4 +1,5 @@
 import { api } from "../../../services"
+import { toast } from "react-hot-toast"
 import _ from "lodash"
 
 export async function getProducts(credentials: any) {
@@ -8,13 +9,19 @@ export async function getProducts(credentials: any) {
         return {}
     } catch (error) {
         console.error(error)
+        toast.success(error.message)
     }
 }
 
 export async function saveProduct(body: any) {
     try {
-        return await api.post('product', _.omit(body, ['uuid']), { params: { uuid: body.uuid } })
+        const product = await api[body.uuid ? "put" : "post"]('product', _.omit(body, ['uuid']), { params: { uuid: body.uuid } })
+
+        toast.success(`Produto ${body.uuid ? "atualizado" : "cadastrado"} com sucesso!`)
+
+        return product
     } catch (error) {
         console.error(error)
+        toast.success(error.message)
     }
 }

@@ -54,7 +54,6 @@ export const Container: any = styled.aside<{ show: boolean }>`
                 cursor: pointer;
                 display: flex;
                 align-items: center;
-                transition: color ease .3s;
                 border-left: 5px solid transparent;
 
                 @media(max-width: 650px) {

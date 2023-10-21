@@ -2,47 +2,20 @@ import React, { useRef } from "react"
 import { Container } from "./styles"
 import { Form, Logo } from "../../../components"
 import { useRouter } from "next/router"
+import { register } from "@/pages/api/auth"
 
 export default function Register(props: any) {
-
     const router = useRouter()
-    const formRef: any = useRef({})
 
     // const phone = (value: string) => Refactoring.mask.phone(value)
     // const removePhone = (value: string) => Refactoring.removeMask.phone(value)
 
-    async function onSubmit(data: any) {
-        // try {
-        //     const schema = Yup.object().shape({
-        //         name: Yup.string().required('Campo obrigatório!'),
-        //         email: Yup.string().email("E-mail inválido!").required('Campo obrigatório!'),
-        //         password: Yup.string().min(6, "Mínimo 6 caracteres").required('Campo obrigatório!'),
-        //         password_confirm: Yup.string().oneOf([Yup.ref('password'), null], 'Confirmação inválida!').required('Campo obrigatório!'),
-        //     })
+    const onSubmit = async (data: any) => {
+        console.log(data)
 
-        //     await schema.validate(data, { abortEarly: false })
+        await register({})
 
-        //     formRef.current.setErrors({})
-
-        //     const body: any = {
-        //         name: data.name,
-        //         emailPhone: data.email,
-        //         password: data.password,
-        //         redirect: () => router.push("/auth/login")
-        //     }
-
-        //     dispatch(registerRequest(body))
-        // } catch (err) {
-        //     if (err instanceof Yup.ValidationError) {
-        //         const errorMessages = {}
-
-        //         err.inner.forEach((error) => {
-        //             errorMessages[error.path] = error.message
-        //         })
-
-        //         formRef.current.setErrors(errorMessages)
-        //     }
-        // }
+        router.push("/auth/login")
     }
 
     return (
@@ -61,8 +34,8 @@ export default function Register(props: any) {
                         ]}
                         buttons={[
                             {
+                                type: "submit",
                                 label: "cadastrar",
-                                onClick: () => formRef.current.submitForm()
                             },
                             {
                                 label: "cancelar",

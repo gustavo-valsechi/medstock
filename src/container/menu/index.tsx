@@ -62,8 +62,8 @@ export default function Menu(props: { show: boolean }) {
                             <label>gustavo@gmail.com</label>
                         </div>
                     </div>
-                    <button>
-                        <i className='fa-solid fa-right-from-bracket' onClick={logout} />
+                    <button onClick={logout}>
+                        <i className='fa-solid fa-right-from-bracket' />
                     </button>
                 </div>
             </footer>

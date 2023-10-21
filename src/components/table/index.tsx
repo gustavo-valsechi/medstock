@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react"
 import { Container } from "./styles"
-import { Loading } from "../loading-bar"
+import { LoadingBar } from "../loading/bar"
 import { Paginate } from "./paginate"
 import Refactoring from "../../utils"
 import Image from "next/image"
@@ -95,7 +95,7 @@ export function Table(props: ITable) {
                 <tr key={key}>
                   {_.map(props.options, (data, index: number) => (
                     <td key={index}>
-                      <Loading
+                      <LoadingBar
                         height="2.5rem"
                         borderRadius={
                           index === 0

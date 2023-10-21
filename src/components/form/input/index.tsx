@@ -36,7 +36,7 @@ export function Input(props: IInput) {
                     onFocus={() => {
                         if (props.onFocus) props.onFocus(props.name)
                     }}
-                    {..._.omit(props, ['onFocus', 'className', 'onChange', 'mask', 'value'])}
+                    {..._.omit(props, ['onFocus', 'className', 'onChange', 'mask', 'value', 'maxLenght'])}
                 />
             </div>
             {!!props.error && (
