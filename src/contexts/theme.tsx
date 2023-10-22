@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useEffect, useState } from 'react'
-import { ThemeProvider } from 'styled-components'
+import React, { createContext, useContext, useEffect, useState } from "react"
+import { ThemeProvider } from "styled-components"
 
 interface ITheme {
     [key: string]: {
@@ -16,6 +16,7 @@ interface ITheme {
         transparent_3: string
         transparent_2: string
         transparent_1: string
+        transparent_08: string
         transparent_05: string
     }
 }
@@ -49,6 +50,7 @@ const ThemeProviderContainer = ({ children }) => {
             transparent_3: "rgb(0, 0, 0, 0.3)",
             transparent_2: "rgb(0, 0, 0, 0.2)",
             transparent_1: "rgb(0, 0, 0, 0.1)",
+            transparent_08: "rgb(0, 0, 0, 0.08)",
             transparent_05: "rgb(0, 0, 0, 0.05)",
         },
         dark: {
@@ -65,6 +67,7 @@ const ThemeProviderContainer = ({ children }) => {
             transparent_3: "rgb(255, 255, 255, 0.3)",
             transparent_2: "rgb(255, 255, 255, 0.2)",
             transparent_1: "rgb(255, 255, 255, 0.1)",
+            transparent_08: "rgb(255, 255, 255, 0.08)",
             transparent_05: "rgb(255, 255, 255, 0.05)",
         }
     }

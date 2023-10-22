@@ -1,6 +1,6 @@
 "use client"
 
-import styled from 'styled-components'
+import styled from "styled-components"
 
 export const Container: any = styled.aside<{ show: boolean }>`
     height: 100vh;
@@ -156,6 +156,7 @@ export const Container: any = styled.aside<{ show: boolean }>`
                         &:first-child {
                             font-size: .8rem;
                             font-weight: 600;
+                            text-transform: capitalize;
                         }
 
                         &:last-child {

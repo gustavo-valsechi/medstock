@@ -4,7 +4,7 @@ import { createGlobalStyle } from "styled-components"
 
 export const GlobalStyle = createGlobalStyle`
     html, body, input, select, textarea, div, button {
-        font-family: 'Poppins', sans-serif;
+        font-family: "Poppins", sans-serif;
         -webkit-tap-highlight-color: rgba(255, 255, 255, 0); 
     } 
 

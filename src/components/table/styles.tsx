@@ -57,8 +57,8 @@ export const Container = styled.div<IProps>`
                     .avatar {
                         width: 1.8rem;
                         height: 1.8rem;
-                        background: ${({ theme }) => theme.transparent_05};
-                        border-radius: 1rem;
+                        background: ${({ theme }) => theme.transparent_08};
+                        border-radius: 5px;
                         display: flex;
                         align-items: center;
                         justify-content: center;
@@ -71,7 +71,7 @@ export const Container = styled.div<IProps>`
                         }
 
                         i {
-                            font-size: 1.8rem;
+                            font-size: .9rem;
                         }
                     }
                 }
@@ -128,6 +128,7 @@ export const Container = styled.div<IProps>`
                             opacity: .9;
 
                             &.negative {
+                                color: ${({ theme }) => theme.primary};
                                 background: ${({ theme }) => theme.negative};
                             }
                         }

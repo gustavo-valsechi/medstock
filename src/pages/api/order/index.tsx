@@ -4,9 +4,17 @@ import _ from "lodash"
 
 export async function getOrders(credentials: any) {
     try {
-        // const { data } = await api.get('order', { params: credentials })
+        // const { data } = await api.get("order", { params: credentials })
 
-        return {}
+        return {
+            content: [
+                { id: 1, number: 1, customer: "gustavo valsechi de freitas", product: "tilenol", total: 345.98 },
+                { id: 2, number: 2, customer: "gustavo valsechi de freitas", product: "tilenol", total: 59.99 },
+                { id: 3, number: 3, customer: "gustavo valsechi de freitas", product: "tilenol", total: 227.50 },
+            ],
+            total: 3,
+            totalPage: 1,
+        }
     } catch (error) {
         console.error(error)
         toast.success(error.message)
@@ -15,11 +23,11 @@ export async function getOrders(credentials: any) {
 
 export async function saveOrder(body: any) {
     try {
-        const order = await api.post('order', _.omit(body, ['uuid']), { params: { uuid: body.uuid } })
+        const { data } = await api.post("order", _.omit(body, ["uuid"]), { params: { uuid: body.uuid } })
 
         toast.success("Pedido registrado com sucesso!")
 
-        return order
+        return data
     } catch (error) {
         console.error(error)
         toast.success(error.message)

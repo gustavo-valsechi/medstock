@@ -1,5 +1,5 @@
-import { Html, Head, Main, NextScript } from 'next/document'
-import { RootStyleRegistry } from '@/tools'
+import { Html, Head, Main, NextScript } from "next/document"
+import { RootStyleRegistry } from "@/tools"
 
 export default function Document() {
     return (

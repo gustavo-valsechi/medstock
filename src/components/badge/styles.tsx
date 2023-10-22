@@ -20,7 +20,7 @@ export const Container = styled.div<{ color: string }>`
   }
 
   &:before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;

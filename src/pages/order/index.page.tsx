@@ -1,12 +1,12 @@
-import React, { useState } from 'react'
-import { Table } from '../../components'
-import { Container } from './styles'
-import { useRouter } from 'next/router'
-import Refactoring from '../../utils'
+import React, { useState } from "react"
+import { Table } from "../../components"
+import { Container } from "./styles"
+import { useRouter } from "next/router"
+import Refactoring from "../../utils"
 
-import { getOrders } from '../api/order'
+import { getOrders } from "../api/order"
 
-import ModalCustomer from './modal'
+import ModalCustomer from "./modal"
 
 export default function Order({ orders }) {
   const router = useRouter()
@@ -16,22 +16,20 @@ export default function Order({ orders }) {
   const [loading, setLoading] = useState(false)
   const [content, setContent] = useState(orders)
 
-  const phone = (value: string) => Refactoring.mask.phone(value)
-
   const fetch = async (page: number) => {
     setPage(page || 0)
     setLoading(true)
 
     const data = await getOrders({
       offset: page,
-      order: { dhOperation: 'DESC' }
+      order: { dhOperation: "DESC" }
     })
 
     setContent(data)
     setLoading(false)
   }
 
-  const customer = (data: any) => {
+  const order = (data: any) => {
     setModal({
       is: true,
       content: data
@@ -44,7 +42,7 @@ export default function Order({ orders }) {
         modal={{ value: modal, set: setModal }}
         fetch={() => fetch(0)}
       />
-      <div className='templates-label'>
+      <div className="templates-label">
         <span>Pedidos</span>
         <p>Crie pedidos de venda com facilidade e eficiência, enquanto gerencia seu caixa de forma rápida e descomplicada.</p>
       </div>
@@ -59,28 +57,28 @@ export default function Order({ orders }) {
           }
         }}
         notFound={{
-          title: 'Nenhum pedido encontrado',
-          message: 'Adicione um pedido de venda para aparecer algum registro'
+          title: "Nenhum pedido encontrado",
+          message: "Adicione um pedido de venda para aparecer algum registro"
         }}
         options={[
           {
             column: {
               action: {
-                icon: 'fa-solid fa-arrows-rotate',
+                icon: "fa-solid fa-arrows-rotate",
                 disabled: loading,
                 function: () => fetch(0),
                 position: "left"
               }
             },
-            row: { image: (data: any) => data.photo }
+            row: { image: { icon: "fa-solid fa-dollar-sign" } }
           },
-          { column: 'Nome', row: { name: 'name', style: { fontWeight: 600 } } },
-          { column: 'Telefone', row: { name: 'phone', mask: phone } },
-          { column: 'E-mail', row: 'email' },
-          { column: 'Grupo', row: 'group' },
+          { column: "Número", row: { custom: (data) => `#${data.number}`, style: { fontWeight: 600 } } },
+          { column: "Cliente", row: { name: "customer", style: { textTransform: "capitalize" } } },
+          { column: "Produto", row: { name: "product", style: { textTransform: "capitalize" } } },
+          { column: "Total", row: { name: "total", mask: Refactoring.format.money } },
           {
-            column: { action: { icon: 'fa-solid fa-plus', function: customer } },
-            row: { actions: [{ icon: 'fa-solid fa-pen-to-square', function: (data: any) => customer(data) }] }
+            column: { action: { icon: "fa-solid fa-plus", function: order } },
+            row: { actions: [{ function: (data: any) => order(data) }] }
           },
         ]}
       />
@@ -92,7 +90,7 @@ export async function getServerSideProps() {
 
   const orders = await getOrders({
     offset: 0,
-    order: { name: 'ASC' }
+    order: { name: "ASC" }
   }) || {}
 
   return { props: { orders } }

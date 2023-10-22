@@ -43,7 +43,7 @@ export const Container = styled.div`
           ? "translateX(-18rem)"
           : "translateX(18rem)"
   };
-    opacity: ${(props: any) => props.center && !props.toggle ? '0' : '1'};
+    opacity: ${(props: any) => props.center && !props.toggle ? "0" : "1"};
     transition: ease 0.3s;
     position: absolute;
 
@@ -120,9 +120,9 @@ export const Container = styled.div`
 
       .modal-nummus-close {
         position: absolute;
-        color: ${(props: any) => props.light ? 'rgb(255, 255, 255, 0.6)' : 'rgb(0, 0, 0, 0.6)'};
-        top: ${(props: any) => props.center ? '1rem' : '1.5rem'};
-        right: ${(props: any) => props.center ? '1rem' : '1.5rem'};
+        color: ${(props: any) => props.light ? "rgb(255, 255, 255, 0.6)" : "rgb(0, 0, 0, 0.6)"};
+        top: ${(props: any) => props.center ? "1rem" : "1.5rem"};
+        right: ${(props: any) => props.center ? "1rem" : "1.5rem"};
         width: 1rem;
         height: 1rem;
         cursor: pointer;
@@ -132,7 +132,7 @@ export const Container = styled.div`
         justify-content: center;
 
         &:hover {
-          color: ${(props: any) => props.light ? 'rgb(255, 255, 255, 1)' : 'rgb(0, 0, 0, 1)'};
+          color: ${(props: any) => props.light ? "rgb(255, 255, 255, 1)" : "rgb(0, 0, 0, 1)"};
         }
       }
     }

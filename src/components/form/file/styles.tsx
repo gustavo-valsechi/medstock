@@ -16,8 +16,8 @@ export const Container: any = styled.div<{ error: string }>`
         padding: .5rem 1rem;
         width: 100%;
         font-size: .8rem;
-        background: ${(props: any) => props.disabled ? '${({ theme }) => theme.transparent_2}' : '${({ theme }) => theme.primary}'};
-        opacity: ${(props: any) => props.disabled ? '.7' : '1'};
+        background: ${(props: any) => props.disabled ? "${({ theme }) => theme.transparent_2}" : "${({ theme }) => theme.primary}"};
+        opacity: ${(props: any) => props.disabled ? ".7" : "1"};
         color: ${({ theme }) => theme.transparent_6};
         cursor: pointer;
     }

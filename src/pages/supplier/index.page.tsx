@@ -1,12 +1,12 @@
-import React, { useState } from 'react'
-import { Table } from '../../components'
-import { Container } from './styles'
-import { useRouter } from 'next/router'
-import Refactoring from '../../utils'
+import React, { useState } from "react"
+import { Table } from "../../components"
+import { Container } from "./styles"
+import { useRouter } from "next/router"
+import Refactoring from "../../utils"
 
-import { getSuppliers } from '../api/supplier'
+import { getSuppliers } from "../api/supplier"
 
-import ModalCustomer from './modal'
+import ModalCustomer from "./modal"
 
 export default function Supplier({ suppliers }) {
   const router = useRouter()
@@ -16,22 +16,27 @@ export default function Supplier({ suppliers }) {
   const [loading, setLoading] = useState(false)
   const [content, setContent] = useState(suppliers)
 
-  const phone = (value: string) => Refactoring.mask.phone(value)
-
   const fetch = async (page: number) => {
     setPage(page || 0)
     setLoading(true)
 
     const data = await getSuppliers({
       offset: page,
-      order: { dhOperation: 'DESC' }
+      order: { dhOperation: "DESC" }
     })
 
     setContent(data)
     setLoading(false)
   }
 
-  const customer = (data: any) => {
+  const setSupplier = (data: any) => {
+    setModal({
+      is: true,
+      content: data
+    })
+  }
+
+  const removeSupplier = (data: any) => {
     setModal({
       is: true,
       content: data
@@ -44,7 +49,7 @@ export default function Supplier({ suppliers }) {
         modal={{ value: modal, set: setModal }}
         fetch={() => fetch(0)}
       />
-      <div className='templates-label'>
+      <div className="templates-label">
         <span>Fornecedores</span>
         <p>Aprimore o reabastecimento do seu estoque ao incluir os fornecedores dos seus produtos.</p>
       </div>
@@ -59,28 +64,32 @@ export default function Supplier({ suppliers }) {
           }
         }}
         notFound={{
-          title: 'Nenhum fornecedor encontrado',
-          message: 'Adicione um fornecedor para aparecer algum registro'
+          title: "Nenhum fornecedor encontrado",
+          message: "Adicione um fornecedor para aparecer algum registro"
         }}
         options={[
           {
             column: {
               action: {
-                icon: 'fa-solid fa-arrows-rotate',
+                icon: "fa-solid fa-arrows-rotate",
                 disabled: loading,
                 function: () => fetch(0),
                 position: "left"
               }
             },
-            row: { image: (data: any) => data.photo }
+            row: { image: { icon: "fa-solid fa-building" } }
           },
-          { column: 'Nome', row: { name: 'name', style: { fontWeight: 600 } } },
-          { column: 'Telefone', row: { name: 'phone', mask: phone } },
-          { column: 'E-mail', row: 'email' },
-          { column: 'Grupo', row: 'group' },
+          { column: "Nome", row: { name: "name", style: { fontWeight: 600, textTransform: "capitalize" } } },
+          { column: "Telefone", row: { name: "phone", mask: Refactoring.mask.phone } },
+          { column: "CNPJ", row: { name: "cnpj", mask: Refactoring.mask.docNumber } },
+          { column: "E-mail", row: "email" },
           {
-            column: { action: { icon: 'fa-solid fa-plus', function: customer } },
-            row: { actions: [{ icon: 'fa-solid fa-pen-to-square', function: (data: any) => customer(data) }] }
+            column: { style: { width: "2.3rem" } },
+            row: { actions: [{ icon: "fa-solid fa-pen-to-square", function: (data: any) => setSupplier(data) }] }
+          },
+          {
+            column: { action: { icon: "fa-solid fa-plus", function: setSupplier }, style: { width: "2.3rem" } },
+            row: { actions: [{ icon: "fa-solid fa-trash-can", function: (data: any) => removeSupplier(data) }] }
           },
         ]}
       />
@@ -92,7 +101,7 @@ export async function getServerSideProps() {
 
   const suppliers = await getSuppliers({
     offset: 0,
-    order: { name: 'ASC' }
+    order: { name: "ASC" }
   }) || {}
 
   return { props: { suppliers } }

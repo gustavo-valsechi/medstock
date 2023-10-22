@@ -9,11 +9,11 @@ export default function Header(props: any) {
   return (
     <Container themeType={theme} {...props}>
       <div
-        className='theme-toggle'
+        className="theme-toggle"
         onClick={() => setTheme(theme === "light" ? "dark" : "light")}
       >
         <i className="fa-solid fa-moon" />
-        <div className='toggle'>
+        <div className="toggle">
           <div />
         </div>
         <i className="fa-solid fa-sun" />

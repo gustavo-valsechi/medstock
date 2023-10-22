@@ -3,47 +3,72 @@ import _ from "lodash"
 export default class Refactoring {
     static format = {
         stringLimit(value: string, limit: number) {
-            if (!value) return ''
+            if (!value) return ""
 
             if (value.length <= (limit)) return value
 
-            return value.substring(0, limit) + '...'
+            if (!_.isString(value)) return ""
+
+            return value.substring(0, limit) + "..."
         },
 
         address(data: any) {
-            if (!data) return ''
+            if (!data) return ""
 
             return `${data.city} - ${data.state} / ${data.address}`
         },
 
         match(value: any) {
-            if (!value) return ''
+            if (!value) return ""
 
             if (Number(value.replace(/\D/g, ""))) return String(value)
 
-            if (typeof value !== 'string') {
+            if (typeof value !== "string") {
                 return _.map(value, (data) => data.normalize("NFD").replace(/[^a-zA-Z\s]/g, "").toUpperCase())
             }
 
             return value.normalize("NFD").replace(/[^a-zA-Z\s]/g, "").toUpperCase()
         },
+
+        money: (value: any, notSign?: boolean) => {
+            const locale = 'pt-br'
+
+            value = parseFloat(value)
+
+            if (!notSign) {
+                return new Intl.NumberFormat(locale, { style: 'currency', currency: 'BRL' }).format(value)
+            }
+
+            return new Intl.NumberFormat(locale, { minimumFractionDigits: 2 }).format(value)
+        },
+
     }
 
     static mask = {
         docNumber: (value: any) => {
-            if (!value) return ''
+            if (!value) return ""
 
             value = this.removeMask.docNumber(value)
 
+            if (value.length <= 11) {
+                return value
+                    .replace(/\D/g, "")
+                    .replace(/(\d{3})(\d)/, "$1.$2")
+                    .replace(/(\d{3})(\d)/, "$1.$2")
+                    .replace(/(\d{3})(\d{1,2})/, "$1-$2")
+                    .replace(/(-\d{2})\d+?$/, "$1");
+            }
+
             return value
                 .replace(/\D/g, "")
+                .replace(/(\d{2})(\d)/, "$1.$2")
                 .replace(/(\d{3})(\d)/, "$1.$2")
-                .replace(/(\d{3})(\d)/, "$1.$2")
-                .replace(/(\d{3})(\d{1,2})/, "$1-$2")
+                .replace(/(\d{3})(\d{1,2})/, "$1/$2")
+                .replace(/(\d{4})(\d{1,2})/, "$1-$2")
                 .replace(/(-\d{2})\d+?$/, "$1")
         },
         phone: (value: any) => {
-            if (!value) return ''
+            if (!value) return ""
 
             if (value.length === 14 || value.length === 10) {
                 return value
@@ -60,7 +85,7 @@ export default class Refactoring {
                 .replace(/(-\d{4})\d+?$/, "$1")
         },
         percent: (value: any) => {
-            if (!value) return ''
+            if (!value) return ""
 
             value = value.replace(/\D-+/g, "")
 
@@ -121,15 +146,15 @@ export default class Refactoring {
             return valor.substring(0, 20)
         },
         number: (value: any) => {
-            if (!value) return ''
+            if (!value) return ""
 
-            return value.replace(/\D/g, '')
+            return value.replace(/\D/g, "")
         }
     }
 
     static removeMask = {
         phone: (value: any) => {
-            if (!value) return ''
+            if (!value) return ""
 
             return value
                 .replace("(", "")
@@ -138,7 +163,7 @@ export default class Refactoring {
                 .replace("-", "")
         },
         docNumber: (value: any) => {
-            if (!value) return ''
+            if (!value) return ""
 
             return value
                 .replace(/\./g, "")
@@ -146,19 +171,19 @@ export default class Refactoring {
                 .replace("-", "")
         },
         percent: (value: any) => {
-            if (!value) return ''
+            if (!value) return ""
 
-            return value.replace(',', '.').replace('%', '')
+            return value.replace(",", ".").replace("%", "")
         },
         money: (value: any) => {
-            if (!value) return ''
+            if (!value) return ""
 
-            return value.replace('R$', '').replace(/\./g, '').replace(',', '.')
+            return value.replace("R$", "").replace(/\./g, "").replace(",", ".")
         },
         number: (value: any) => {
-            if (!value) return ''
+            if (!value) return ""
 
-            return value.replace(/\D/g, '')
+            return value.replace(/\D/g, "")
         }
     }
 }

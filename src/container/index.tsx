@@ -1,9 +1,9 @@
-import React from 'react'
-import { Container } from './styles'
-import { useRouter } from 'next/router'
-import Menu from './menu'
-import Header from './header'
-import _ from 'lodash'
+import React from "react"
+import { Container } from "./styles"
+import { useRouter } from "next/router"
+import Menu from "./menu"
+import Header from "./header"
+import _ from "lodash"
 
 export default function MainContainer({ children }) {
 
@@ -14,7 +14,7 @@ export default function MainContainer({ children }) {
     return (
         <Container private={privateRoutes}>
             <Menu show={privateRoutes} />
-            <div className='main-container'>
+            <div className="main-container">
                 <Header />
                 {children}
             </div>

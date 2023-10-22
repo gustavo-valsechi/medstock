@@ -14,13 +14,13 @@ export const Container: any = styled.button`
         ? props.theme.transparent_6
         : props.outline
             ? props.color || props.theme.secondary
-            : '#fff !important'
+            : "#fff !important"
     };
     background: ${(props: any) => props.transparent || props.outline
-        ? 'transparent'
+        ? "transparent"
         : props.color || props.theme.secondary};
     border: 1px solid ${(props: any) => props.transparent
-        ? 'transparent'
+        ? "transparent"
         : props.color || props.theme.secondary};
     pointer-events: ${(props: any) => props.loading === "true" ? "none" : "auto"};
     cursor: ${(props: any) => props.loading === "true" ? "default" : "pointer"};
@@ -45,11 +45,11 @@ export const Container: any = styled.button`
         opacity: .9;
         color: ${(props: any) => props.transparent
         ? props.theme.transparent_6
-        : '#fff'};
+        : "#fff"};
         
         &::before {
             background: ${(props: any) => props.transparent
-        ? 'transparent'
+        ? "transparent"
         : props.color || props.theme.secondary};
         }
     }

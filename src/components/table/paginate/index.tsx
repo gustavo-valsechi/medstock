@@ -26,7 +26,7 @@ export function Paginate(props: IPaginate) {
 
         pages = _.slice(pages, 0, 5)
 
-        if ((Number(props.page.value) + 1) > 5) pages = _.concat(['1..'], pages)
+        if ((Number(props.page.value) + 1) > 5) pages = _.concat(["1.."], pages)
 
         if (Number(props.total) > 6 && (Number(props.page.value) + 1) < Number(props.total)) return _.concat(pages, `..${props.total}`)
 
@@ -52,8 +52,8 @@ export function Paginate(props: IPaginate) {
                 <div
                     key={index}
                     className="paginate page"
-                    data-current={String(props.page.value === (Number(_.replace(page, /\D/g, '')) - 1))}
-                    onClick={() => props.page.set ? props.page.set(Number(_.replace(page, /\D/g, '')) - 1) : null}
+                    data-current={String(props.page.value === (Number(_.replace(page, /\D/g, "")) - 1))}
+                    onClick={() => props.page.set ? props.page.set(Number(_.replace(page, /\D/g, "")) - 1) : null}
                 >
                     {page}
                 </div>

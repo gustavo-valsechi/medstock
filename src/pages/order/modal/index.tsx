@@ -37,9 +37,9 @@ export default function ModalCustomer(props: any) {
                         onSubmit={onSubmit}
                         clearWhen={!props.modal.value?.content?.uuid}
                         initialValues={{
-                            name: props.modal.value?.content?.name || '',
-                            email: props.modal.value?.content?.email || '',
-                            phone: props.modal.value?.content?.phone || ''
+                            name: props.modal.value?.content?.name || "",
+                            email: props.modal.value?.content?.email || "",
+                            phone: props.modal.value?.content?.phone || ""
                         }}
                         inputs={[
                             {
@@ -67,12 +67,12 @@ export default function ModalCustomer(props: any) {
                         ]}
                         buttons={[
                             {
-                                label: 'salvar',
-                                type: 'submit',
+                                label: "salvar",
+                                type: "submit",
                                 loading: saving
                             },
                             {
-                                label: 'cancelar',
+                                label: "cancelar",
                                 transparent: true,
                                 onClick: onClose,
                                 disabled: saving

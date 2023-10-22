@@ -8,10 +8,10 @@ interface IBadge {
 export function Badge(props: IBadge) {
 
   const status: any = {
-    ENVIADO: 'positive',
-    ENTREGUE: 'positive',
-    ABERTO: 'positive',
-    FALHA: 'negative',
+    ENVIADO: "positive",
+    ENTREGUE: "positive",
+    ABERTO: "positive",
+    FALHA: "negative",
   }
 
   return (

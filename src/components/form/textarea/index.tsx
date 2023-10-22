@@ -19,7 +19,7 @@ interface ITextarea {
 export function Textarea(props: ITextarea) {
 
     const onChange = (event: any) => {
-        const value: any = event.target.value || ''
+        const value: any = event.target.value || ""
 
         event.target.value = props.mask ? props.mask(value) : value
 
@@ -34,7 +34,7 @@ export function Textarea(props: ITextarea) {
                     onChange={onChange}
                     maxLength={props.maxLength}
                     rows={props.rows || 5}
-                    {..._.omit(props, ['maxLength', 'className', 'onChange', 'mask', 'rows', 'value'])}
+                    {..._.omit(props, ["maxLength", "className", "onChange", "mask", "rows", "value"])}
                 />
             </div>
             {!!props.error && (

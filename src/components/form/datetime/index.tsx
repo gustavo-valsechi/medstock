@@ -21,7 +21,7 @@ export function DateTime(props: IDateTime) {
     const { theme } = useTheme()
 
     const onChange = (event: any) => {
-        const value: any = event.target.value || ''
+        const value: any = event.target.value || ""
 
         event.target.value = props.mask ? props.mask(value) : value
 
@@ -39,7 +39,7 @@ export function DateTime(props: IDateTime) {
                     onFocus={() => {
                         if (props.onFocus) props.onFocus(props.name)
                     }}
-                    {..._.omit(props, ['maxLength', 'className', 'onChange', 'mask', 'type', 'value'])}
+                    {..._.omit(props, ["maxLength", "className", "onChange", "mask", "type", "value"])}
                 />
             </div>
             {!!props.error && (

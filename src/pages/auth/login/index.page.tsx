@@ -30,8 +30,17 @@ export default function Login(props: any) {
                     <Form
                         onSubmit={onSubmit}
                         inputs={[
-                            { label: "E-mail", name: "email", validation: z.string({ required_error: "Campo obrigatório!" }).email("E-mail inválido!") },
-                            { label: "Senha", name: "password", type: "password", validation: z.string({ required_error: "Campo obrigatório!" }) },
+                            {
+                                label: "E-mail",
+                                name: "email",
+                                validation: z.string({ required_error: "Campo obrigatório!" }).email("E-mail inválido!")
+                            },
+                            {
+                                label: "Senha",
+                                name: "password",
+                                type: "password",
+                                validation: z.string({ required_error: "Campo obrigatório!" })
+                            },
                         ]}
                         buttons={[{
                             type: "submit",

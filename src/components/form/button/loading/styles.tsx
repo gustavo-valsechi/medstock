@@ -11,7 +11,7 @@ export const Container: any = styled.div`
         width: .5rem;
         height: .5rem;
         border-radius: 1rem;
-        background: ${(props) => props.color || 'rgb(255, 255, 255, 1)'};
+        background: ${(props) => props.color || "rgb(255, 255, 255, 1)"};
 
         &:nth-child(1) {
             animation: blinkOne infinite ease 2s;

@@ -59,7 +59,7 @@ export const Container = styled.header`
       }
 
       &:after {
-        content: '';
+        content: "";
         position: absolute;
         width: 100%;
         height: 100%;
@@ -72,7 +72,7 @@ export const Container = styled.header`
       }
 
       &:before {
-        content: '';
+        content: "";
         position: absolute;
         width: 100%;
         height: 100%;

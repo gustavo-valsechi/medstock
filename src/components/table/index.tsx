@@ -7,6 +7,7 @@ import Image from "next/image"
 import _ from "lodash"
 
 interface IColumn {
+  style?: object
   action?: {
     disabled?: boolean
     position?: string
@@ -22,10 +23,10 @@ interface IRow {
     function: (data?: any) => void
     icon?: string
   }>
-  image?: (data: any) => void | {
+  image?: {
     value?: (data: any) => void
     icon?: string
-  }
+  } | ((data: any) => void)
   style?: object
   mask?: (data: any) => void
   custom?: (data: any) => void
@@ -57,7 +58,7 @@ interface ITable {
 
 export function Table(props: ITable) {
 
-  const limit = (value: string) => Refactoring.format.stringLimit(value, 30)
+  const limit = (value: string) => Refactoring.format.stringLimit(String(value), 30)
 
   return (
     <Container notFound={!props.content?.length && !props.loading}>
@@ -66,7 +67,7 @@ export function Table(props: ITable) {
           <thead>
             <tr>
               {_.map(props.options, (option, index: number) =>
-                <th key={index}>
+                <th key={index} style={option.column?.["style"]}>
                   <div
                     className={`table-temp ${option.column?.["action"]
                       ? `action ${option.column?.["action"]?.position
@@ -75,13 +76,13 @@ export function Table(props: ITable) {
                       : ""}`
                     }
                   >
-                    {!!option.row?.["actions"]
+                    {!!option.column?.["action"]
                       ? <button
                         className="button"
                         onClick={option.column?.["action"]?.function}
                         disabled={option.column?.["action"]?.disabled}
                       >
-                        <i className={option.column?.["action"]?.icon || 'fa-solid fa-eye'} />
+                        <i className={option.column?.["action"]?.icon || "fa-solid fa-eye"} />
                       </button>
                       : _.isString(option.column) ? option.column : ""}
                   </div>
@@ -128,22 +129,24 @@ export function Table(props: ITable) {
                                 key={index}
                                 className={`
                                   button
-                                  ${_.includes(action.icon, 'trash') ? "negative" : ""} 
+                                  ${_.includes(action.icon, "trash") ? "negative" : ""} 
                                 `}
                                 onClick={() => action.function ? action.function(data) : null}
                                 disabled={action.disabled}
                               >
-                                <i className={action.icon || 'fa-solid fa-eye'} />
+                                <i className={action.icon || "fa-solid fa-eye"} />
                               </button>)}
                           </div>
                           : option.row?.["image"]
                             ? <div className="avatar">
-                              {option.row?.["image"]?.value ? option.row?.["image"]?.value(data) : option.row?.["image"](data)
-                                ? <Image
-                                  src={option.row?.["image"]?.value ? option.row?.["image"]?.value(data) : option.row?.["image"](data)}
-                                  alt=""
-                                />
-                                : <i className={option.row?.["image"]?.icon || "fa-solid fa-circle-user"} />}
+                              {option.row?.["image"]?.value
+                                ? option.row?.["image"]?.value(data)
+                                : _.isFunction(option.row?.["image"]) ? option.row?.["image"](data) : false
+                                  ? <Image
+                                    src={option.row?.["image"]?.value ? option.row?.["image"]?.value(data) : option.row?.["image"](data)}
+                                    alt=""
+                                  />
+                                  : <i className={option.row?.["image"]?.icon || "fa-solid fa-circle-user"} />}
                             </div>
                             : <div className="row-content">
                               {option.row?.["mask"]
@@ -152,7 +155,7 @@ export function Table(props: ITable) {
                                   ? option.row?.["custom"](data[option.row?.["name"]] || data)
                                   : data[option.row?.["name"] || option.row]
                                     ? limit(data[option.row?.["name"] || option.row])
-                                    : '---'}
+                                    : "---"}
                             </div>}
                       </div>
                     </td>

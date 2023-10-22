@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react'
-import type { AppProps } from 'next/app'
-import { GlobalStyle } from './_globals.styles'
-import { ThemeProvider } from '@/contexts/theme'
-import { AuthProvider } from '@/contexts/auth'
-import { StyleSheetManager } from 'styled-components'
-import { LoadingPage } from '@/components'
-import { Toaster } from 'react-hot-toast'
+import React, { useEffect, useState } from "react"
+import type { AppProps } from "next/app"
+import { GlobalStyle } from "./_globals.styles"
+import { ThemeProvider } from "@/contexts/theme"
+import { AuthProvider } from "@/contexts/auth"
+import { StyleSheetManager } from "styled-components"
+import { LoadingPage } from "@/components"
+import { Toaster } from "react-hot-toast"
 import isPropValid from "@emotion/is-prop-valid"
-import Head from 'next/head'
-import _ from 'lodash'
+import Head from "next/head"
+import _ from "lodash"
 
 import "../components/loading/page/styles.css"
 

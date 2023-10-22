@@ -40,7 +40,7 @@ export function InputFile(props: IInputFile) {
             />
             {!!props.label && <Label>{props.label}</Label>}
             <div className="image-content" onClick={() => inputRef.current.click()}>
-                {inputRef?.current?.value || 'selecione uma imagem'}
+                {inputRef?.current?.value || "selecione uma imagem"}
             </div>
             {!!props.error && (
                 <div className="input-error">

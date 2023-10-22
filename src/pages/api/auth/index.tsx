@@ -7,6 +7,12 @@ export async function login(credentials: any) {
         const token = Buffer.from(JSON.stringify(credentials)).toString("base64")
 
         localStorage.setItem("@Medstock:token", token)
+        localStorage.setItem("@Medstock:user", JSON.stringify({
+            id: 1,
+            name: "gustavo valsechi de freitas",
+            email: "gustavo@nummus.com.br",
+            phone: "48999100598",
+        }))
 
         return token
     } catch (error) {
@@ -18,6 +24,20 @@ export async function login(credentials: any) {
 export async function register(body: any) {
     try {
         toast.success("Conta cadastrada com sucesso!")
+    } catch (error) {
+        console.error(error)
+        toast.success(error.message)
+    }
+}
+
+export async function getUser() {
+    try {
+        return {
+            id: 1,
+            name: "gustavo valsechi de freitas",
+            email: "gustavo@nummus.com.br",
+            phone: "48999100598",
+        }
     } catch (error) {
         console.error(error)
         toast.success(error.message)

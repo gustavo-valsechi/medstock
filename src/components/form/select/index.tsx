@@ -30,7 +30,7 @@ export function Select(props: ISelect) {
                     onFocus={() => {
                         if (props.onFocus) props.onFocus(props.name)
                     }}
-                    {..._.omit(props, ['className', 'onChange', 'onFocus', 'options', 'onMouseDown', 'onBlur', 'value', 'maxLength'])}
+                    {..._.omit(props, ["className", "onChange", "onFocus", "options", "onMouseDown", "onBlur", "value", "maxLength"])}
                 >
                     {_.map(props.options, (data, index) =>
                         <option
@@ -41,7 +41,7 @@ export function Select(props: ISelect) {
                         </option>
                     )}
                 </select>
-                <i className={focus ? 'fa-solid fa-chevron-up' : 'fa-solid fa-chevron-down'} />
+                <i className={focus ? "fa-solid fa-chevron-up" : "fa-solid fa-chevron-down"} />
             </div>
             {!!props.error && (
                 <div className="input-error">
