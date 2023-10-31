@@ -56,7 +56,7 @@ export function Form(props: IForm) {
         onSubmit: props.onSubmit
     })
 
-    const hasValue = (content: any) => _.some(Object.values(formik.values), (value) => !!value)
+    // const hasValue = (content: any) => _.some(Object.values(formik.values), (value) => !!value)
 
     // useEffect(() => {
     //     if (hasValue(initialValues()) && !hasValue(formik.values)) return
