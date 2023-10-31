@@ -1,4 +1,6 @@
-import React, { useRef, useState } from "react"
+"use client"
+
+import React from "react"
 import { Container } from "./styles"
 import { LoadingBar } from "../loading/bar"
 import { Paginate } from "./paginate"
@@ -35,7 +37,7 @@ interface IRow {
 
 interface ITable {
   content: Array<any>
-  loading: boolean | {
+  loading?: boolean | {
     is?: boolean
     items?: Array<any>
   }
@@ -67,22 +69,22 @@ export function Table(props: ITable) {
           <thead>
             <tr>
               {_.map(props.options, (option, index: number) =>
-                <th key={index} style={option.column?.["style"]}>
+                <th key={index} style={(option.column as { style: object })?.style}>
                   <div
-                    className={`table-temp ${option.column?.["action"]
-                      ? `action ${option.column?.["action"]?.position
-                        ? option.column?.["action"]?.position
+                    className={`table-temp ${(option.column as { action: object })?.action
+                      ? `action ${(option.column as { action: { position: string } })?.action?.position
+                        ? (option.column as { action: { position: string } })?.action?.position
                         : ""}`
                       : ""}`
                     }
                   >
-                    {!!option.column?.["action"]
+                    {!!(option.column as { action: object })?.action
                       ? <button
                         className="button"
-                        onClick={option.column?.["action"]?.function}
-                        disabled={option.column?.["action"]?.disabled}
+                        onClick={(option.column as { action: { function: (data?: any) => void } })?.action?.function}
+                        disabled={(option.column as { action: { disabled: boolean } })?.action?.disabled}
                       >
-                        <i className={option.column?.["action"]?.icon || "fa-solid fa-eye"} />
+                        <i className={(option.column as { action: { icon: string } })?.action?.icon || "fa-solid fa-eye"} />
                       </button>
                       : _.isString(option.column) ? option.column : ""}
                   </div>
@@ -91,8 +93,8 @@ export function Table(props: ITable) {
             </tr>
           </thead>
           <tbody>
-            {props.loading?.["is"] || props.loading
-              ? _.map(props.loading?.["items"] || [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], (data, key: number) =>
+            {(props.loading as { is: boolean })?.is || props.loading
+              ? _.map((props.loading as { items: Array<any> })?.items || [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], (data, key: number) =>
                 <tr key={key}>
                   {_.map(props.options, (data, index: number) => (
                     <td key={index}>
@@ -117,14 +119,14 @@ export function Table(props: ITable) {
                       <div
                         className={`
                           table-temp 
-                          ${option.row?.["actions"] ? "action" : ""} 
-                          ${option.row?.["image"] ? "image" : ""}
+                          ${(option.row as { actions: Array<any> })?.actions ? "action" : ""} 
+                          ${(option.row as { image: any })?.image ? "image" : ""}
                         `}
-                        style={option.row?.["style"]}
+                        style={(option.row as { style: object })?.style}
                       >
-                        {!!option.row?.["actions"]
+                        {!!(option.row as { actions: Array<any> })?.actions
                           ? <div className="actions">
-                            {_.map(option.row?.["actions"], (action, index) =>
+                            {_.map((option.row as { actions: Array<any> })?.actions, (action, index) =>
                               <button
                                 key={index}
                                 className={`
@@ -137,24 +139,28 @@ export function Table(props: ITable) {
                                 <i className={action.icon || "fa-solid fa-eye"} />
                               </button>)}
                           </div>
-                          : option.row?.["image"]
+                          : (option.row as { image: any })?.image
                             ? <div className="avatar">
-                              {option.row?.["image"]?.value
-                                ? option.row?.["image"]?.value(data)
-                                : _.isFunction(option.row?.["image"]) ? option.row?.["image"](data) : false
-                                  ? <Image
-                                    src={option.row?.["image"]?.value ? option.row?.["image"]?.value(data) : option.row?.["image"](data)}
-                                    alt=""
-                                  />
-                                  : <i className={option.row?.["image"]?.icon || "fa-solid fa-circle-user"} />}
+                              {!!(option.row as { image: { value: (data: any) => React.ReactNode } })?.image?.value
+                                ? (option.row as { image: { value: (data: any) => React.ReactNode } })?.image?.value(data)
+                                : !!_.isFunction((option.row as { image: (data: any) => React.ReactNode })?.image)
+                                  ? (option.row as { image: (data: any) => React.ReactNode })?.image(data)
+                                  : false
+                                    ? <Image
+                                      src={!!(option.row as { image: { value: (data: any) => string } })?.image?.value
+                                        ? (option.row as { image: { value: (data: any) => string } })?.image?.value(data)
+                                        : (option.row as { image: (data: any) => string })?.image(data)}
+                                      alt=""
+                                    />
+                                    : <i className={(option.row as { image: { icon: string } })?.image?.icon || "fa-solid fa-circle-user"} />}
                             </div>
                             : <div className="row-content">
-                              {option.row?.["mask"]
-                                ? option.row?.["mask"](data[option.row?.["name"]]) || "---"
-                                : option.row?.["custom"]
-                                  ? option.row?.["custom"](data[option.row?.["name"]] || data)
-                                  : data[option.row?.["name"] || option.row]
-                                    ? limit(data[option.row?.["name"] || option.row])
+                              {!!(option.row as { mask: (data: any) => React.ReactNode })?.mask
+                                ? (option.row as { mask: (data: any) => React.ReactNode })?.mask(data[(option.row as { name: string })?.name]) || "---"
+                                : !!(option.row as { custom: (data: any) => React.ReactNode })?.custom
+                                  ? (option.row as { custom: (data: any) => React.ReactNode })?.custom(data[(option.row as { name: string })?.name] || data)
+                                  : !!data[(option.row as { name: string })?.name || (option.row as string)]
+                                    ? limit(data[(option.row as { name: string })?.name || (option.row as string)])
                                     : "---"}
                             </div>}
                       </div>

@@ -2,7 +2,7 @@
 
 import styled from "styled-components"
 
-export const Container = styled.header`
+export const Container = styled.header<{ themeType: string }>`
   padding: 1rem 2rem;
   display: flex;
   align-items: center;
@@ -30,13 +30,13 @@ export const Container = styled.header`
       &:first-child {
         left: .2rem;
         top: 50%;
-        opacity: ${(props: any) => props.themeType === "light" ? 0 : 1};
+        opacity: ${({ themeType }) => themeType === "light" ? 0 : 1};
       }
 
       &:last-child {
         right: .2rem;
         top: 50%;
-        opacity: ${(props: any) => props.themeType === "light" ? 1 : 0};
+        opacity: ${({ themeType }) => themeType === "light" ? 1 : 0};
       }
     }
 
@@ -45,7 +45,7 @@ export const Container = styled.header`
       height: 1rem;
       border-radius: 1rem;
       position: relative;
-      transform: ${(props: any) => props.themeType === "light" ? "translateX(.2rem)" : "translateX(1.6rem)"};
+      transform: ${({ themeType }) => themeType === "light" ? "translateX(.2rem)" : "translateX(1.6rem)"};
       transition: ease .3s;
       z-index: 1;
 

@@ -1,4 +1,6 @@
-import React, { useCallback, useRef } from "react"
+"use client"
+
+import React, { useRef } from "react"
 import { Container } from "./styles"
 import { Label } from "../label"
 import _ from "lodash"
@@ -13,6 +15,7 @@ interface IInputFile {
     disabled?: boolean
     error: string
     onFocus: (value: string) => void
+    required?: boolean
 }
 
 export function InputFile(props: IInputFile) {
@@ -38,7 +41,7 @@ export function InputFile(props: IInputFile) {
                     if (props.onFocus) props.onFocus(props.name)
                 }}
             />
-            {!!props.label && <Label>{props.label}</Label>}
+            {!!props.label && <Label>{props.label}{props.required ? "*" : ""}</Label>}
             <div className="image-content" onClick={() => inputRef.current.click()}>
                 {inputRef?.current?.value || "selecione uma imagem"}
             </div>

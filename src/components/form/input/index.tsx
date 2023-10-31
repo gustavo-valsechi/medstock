@@ -1,3 +1,5 @@
+"use client"
+
 import React, { useCallback } from "react"
 import { Container } from "./styles"
 import { Label } from "../label"
@@ -14,6 +16,7 @@ interface IInput {
     error: string
     disabled?: boolean
     onFocus: (value: any) => void
+    required?: boolean
 }
 
 export function Input(props: IInput) {
@@ -28,7 +31,7 @@ export function Input(props: IInput) {
 
     return (
         <Container className={props.className} error={props.error}>
-            {!!props.label && <Label>{props.label}</Label>}
+            {!!props.label && <Label>{props.label}{props.required ? "*" : ""}</Label>}
             <div className="input-content">
                 <input
                     onChange={onChange}

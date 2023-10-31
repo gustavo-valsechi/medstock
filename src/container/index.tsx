@@ -1,18 +1,30 @@
-import React from "react"
+"use client"
+
+import React, { useEffect, useState } from "react"
 import { Container } from "./styles"
-import { useRouter } from "next/router"
+import { usePathname } from "next/navigation"
+import { LoadingPage } from "@/components"
 import Menu from "./menu"
 import Header from "./header"
 import _ from "lodash"
 
-export default function MainContainer({ children }) {
+export default function MainContainer({ children }: { children: React.ReactNode }) {
 
-    const { route } = useRouter()
+    const pathname = usePathname()
 
-    const privateRoutes: boolean = !_.includes(route, "auth")
+    const [loading, setLoading] = useState(true)
+
+    const privateRoutes: boolean = !_.includes(pathname, "auth")
+
+    useEffect(() => {
+        setTimeout(() => {
+            setLoading(false)
+        }, 300)
+    }, [])
 
     return (
-        <Container private={privateRoutes}>
+        <Container>
+            {!!loading && <LoadingPage />}
             <Menu show={privateRoutes} />
             <div className="main-container">
                 <Header />

@@ -1,33 +1,35 @@
 "use client"
 
-import React from "react"
-import { ServerStyleSheet, StyleSheetManager } from "styled-components"
+import React, { useState } from "react"
 import { useServerInsertedHTML } from "next/navigation"
+import { ServerStyleSheet, StyleSheetManager } from "styled-components"
+import isPropValid from "@emotion/is-prop-valid"
 
-function useStyledComponentsRegistry() {
-    const [styledComponentsStyleSheet] = React.useState(() => new ServerStyleSheet())
+export default function StyledComponentsRegistry({ children }: { children: React.ReactNode }) {
 
-    const styledComponentsFlushEffect = () => {
-        const styles = styledComponentsStyleSheet.getStyleElement()
-        styledComponentsStyleSheet.seal()
-        return <>{styles}</>
-    }
-
-    const StyledComponentsRegistry = ({ children }: { children: JSX.Element }) => (
-        <StyleSheetManager sheet={styledComponentsStyleSheet.instance}>
-            {children as React.ReactElement}
-        </StyleSheetManager>
-    )
-
-    return [StyledComponentsRegistry, styledComponentsFlushEffect] as const
-}
-
-export function RootStyleRegistry({ children }: { children: React.ReactElement }) {
-    const [StyledComponentsRegistry, styledComponentsFlushEffect] = useStyledComponentsRegistry()
+    const [styledComponentsStyleSheet] = useState(() => new ServerStyleSheet())
 
     useServerInsertedHTML(() => {
-        return <>{styledComponentsFlushEffect()}</>
+        const styles = styledComponentsStyleSheet.getStyleElement()
+        styledComponentsStyleSheet.instance.clearTag()
+        return <>{styles}</>
     })
 
-    return <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
+    const menager = (sheet?: any) => {
+        return <StyleSheetManager
+            sheet={sheet}
+            enableVendorPrefixes
+            shouldForwardProp={(propName, elementToBeRendered) => {
+                return typeof elementToBeRendered === "string"
+                    ? isPropValid(propName) && !["height", "width"].includes(propName)
+                    : true;
+            }}
+        >
+            {children}
+        </StyleSheetManager>
+    }
+
+    if (typeof window !== "undefined") return menager()
+
+    return menager(styledComponentsStyleSheet.instance)
 }

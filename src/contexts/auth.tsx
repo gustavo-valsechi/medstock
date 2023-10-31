@@ -1,11 +1,14 @@
+"use client"
+
 import React, { createContext, useContext, useEffect, useState } from "react"
-import { useRouter } from "next/router"
+import { useRouter, usePathname } from "next/navigation"
 import _ from "lodash"
 
 const AuthContext = createContext<any>({})
 
-export const AuthProvider = ({ children }) => {
+export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const router = useRouter()
+    const pathname = usePathname()
 
     const [token, setToken] = useState("")
     const [user, setUser] = useState<any>({})
@@ -19,10 +22,10 @@ export const AuthProvider = ({ children }) => {
             return
         }
 
-        if (!token) setToken(tokenStorage)
-        if (!user.id) setUser(userStorage ? JSON.parse(userStorage) : {})
+        if (!token && tokenStorage) setToken(tokenStorage)
+        if (!user.id && userStorage) setUser(JSON.parse(userStorage))
 
-        if (_.includes(router.route, "auth")) router.push("/order")
+        if (_.includes(pathname, "auth")) router.push("/order")
         // eslint-disable-next-line
     }, [token])
 

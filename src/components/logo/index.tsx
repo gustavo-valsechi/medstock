@@ -1,8 +1,10 @@
+"use client"
+
 import React from "react"
 import { Container } from "./styles"
 import Image from "next/image"
 
-import logo from "@/assets/logo.png"
+import logo from "./logo.png"
 
 interface ILogo {
   opacity?: string | number

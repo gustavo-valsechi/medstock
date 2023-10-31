@@ -1,6 +1,8 @@
+"use client"
+
 import React from "react"
 import { Container } from "./styles"
-import { useRouter } from "next/router"
+import { usePathname } from "next/navigation"
 import { Logo } from "@/components/logo"
 import { useAuth } from "@/contexts/auth"
 import Link from "next/link"
@@ -14,7 +16,7 @@ interface INavigation {
 
 export default function Menu(props: { show: boolean }) {
 
-    const { route } = useRouter()
+    const pathname = usePathname()
     const { logout, user } = useAuth()
 
     const navigation: Array<INavigation> = [
@@ -35,14 +37,14 @@ export default function Menu(props: { show: boolean }) {
                         {_.map(navigation, (data, index) =>
                             <li key={index}>
                                 <Link href={data.route}>
-                                    <div className={`nav-item ${_.includes(route, data.route) ? "target" : ""}`}>
+                                    <div className={`nav-item ${_.includes(pathname, data.route) ? "target" : ""}`}>
                                         <div>
                                             <i className={data.icon} />
                                         </div>
                                         <div>
                                             {data.label}
                                         </div>
-                                        {_.includes(route, data.route) &&
+                                        {_.includes(pathname, data.route) &&
                                             <div>
                                                 <i className="fa-solid fa-angle-right" />
                                             </div>}

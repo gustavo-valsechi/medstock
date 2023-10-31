@@ -1,3 +1,5 @@
+"use client"
+
 import React, { createContext, useContext, useEffect, useState } from "react"
 import { ThemeProvider } from "styled-components"
 
@@ -23,7 +25,7 @@ interface ITheme {
 
 const ThemeContext = createContext<any>({})
 
-const ThemeProviderContainer = ({ children }) => {
+const ThemeProviderContainer = ({ children }: { children: React.ReactNode }) => {
 
     const [theme, setTheme] = useState("light")
 

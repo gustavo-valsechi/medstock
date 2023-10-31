@@ -1,3 +1,5 @@
+"use client"
+
 import React, { useCallback, useEffect, useState } from "react"
 import { Container } from "./styles"
 import { Button } from "./button"
@@ -54,36 +56,33 @@ export function Form(props: IForm) {
         onSubmit: props.onSubmit
     })
 
-    useEffect(() => {
-        if (formik.values === formik.initialValues) return
+    const hasValue = (content: any) => _.some(Object.values(formik.values), (value) => !!value)
 
-        if (props.clearWhen) return formik.resetForm()
+    // useEffect(() => {
+    //     if (hasValue(initialValues()) && !hasValue(formik.values)) return
 
-        if (formik.initialValues) return
+    //     if (!!props.clearWhen) return formik.resetForm()
 
-        formik.setValues(initialValues())
-    }, [props.clearWhen, initialValues, formik])
+    //     formik.setValues(initialValues())
+    // }, [props.clearWhen, initialValues, formik])
 
     useEffect(() => {
         if (!formik.isSubmitting) return
 
         setSubmitted(true)
-        setFocus("")
     }, [formik])
 
     const component = (data: any, index: number) => {
         const TYPES: any = {
             "text": Input,
-            "password": Input,
             "select": Select,
         }
 
-        const TypeComponent = TYPES[data.type || "text"]
-
-        if (!TypeComponent) return <></>
+        const TypeComponent = TYPES[data.type] || Input
 
         return <TypeComponent
             key={index}
+            type={TYPES[data.type] ? undefined : data.type}
             value={formik.values?.[data.name]}
             error={focus
                 ? focus === data.name ? formik.errors?.[focus] : null
@@ -93,7 +92,7 @@ export function Form(props: IForm) {
             onChange={formik.handleChange}
             onBlur={() => {
                 if (!submitted) formik.setErrors({})
-                if (!submitted) setFocus("")
+                setFocus("")
             }}
             {..._.omit(data, ["validation"])}
         />

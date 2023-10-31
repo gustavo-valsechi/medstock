@@ -1,7 +1,7 @@
-import React from "react"
+import { Container } from "./styles"
 
 export function LoadingPage(props: any) {
-  return <div className="loader-container">
+  return <Container>
     <div className="loader" />
-  </div>
+  </Container>
 }

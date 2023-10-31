@@ -1,3 +1,5 @@
+"use client"
+
 import React, { useState } from "react"
 import { Container } from "./styles"
 import { Label } from "../label"
@@ -13,6 +15,7 @@ interface ISelect {
     error: string
     disabled?: boolean
     onFocus: (value: any) => void
+    required?: boolean
 }
 
 export function Select(props: ISelect) {
@@ -21,7 +24,7 @@ export function Select(props: ISelect) {
 
     return (
         <Container className={props.className} error={props.error}>
-            {!!props.label && <Label>{props.label}</Label>}
+            {!!props.label && <Label>{props.label}{props.required ? "*" : ""}</Label>}
             <div className="select-content">
                 <select
                     onChange={props.onChange}

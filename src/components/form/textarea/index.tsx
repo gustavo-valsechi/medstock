@@ -1,4 +1,6 @@
-import React, { useCallback } from "react"
+"use client"
+
+import React from "react"
 import { Container } from "./styles"
 import { Label } from "../label"
 import _ from "lodash"
@@ -14,6 +16,8 @@ interface ITextarea {
     rows?: number
     error: string
     disabled?: boolean
+    onFocus: (value: string) => void
+    required?: boolean
 }
 
 export function Textarea(props: ITextarea) {
@@ -28,13 +32,16 @@ export function Textarea(props: ITextarea) {
 
     return (
         <Container className={props.className} error={props.error}>
-            {!!props.label && <Label>{props.label}</Label>}
+            {!!props.label && <Label>{props.label}{props.required ? "*" : ""}</Label>}
             <div className="textarea-content">
                 <textarea
                     onChange={onChange}
                     maxLength={props.maxLength}
                     rows={props.rows || 5}
-                    {..._.omit(props, ["maxLength", "className", "onChange", "mask", "rows", "value"])}
+                    onFocus={() => {
+                        if (props.onFocus) props.onFocus(props.name)
+                    }}
+                    {..._.omit(props, ["onFocus", "maxLength", "className", "onChange", "mask", "rows", "value"])}
                 />
             </div>
             {!!props.error && (
