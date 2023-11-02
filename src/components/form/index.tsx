@@ -24,9 +24,7 @@ export function Form(props: IForm) {
     const [focus, setFocus] = useState("")
     const [submitted, setSubmitted] = useState(false)
 
-    const initialValues = useCallback(() => {
-        if (props.initialValues) return props.initialValues
-
+    const setInitialValues = () => {
         const values: any = {}
 
         _.forEach(props.inputs, (data) => {
@@ -34,9 +32,9 @@ export function Form(props: IForm) {
         })
 
         return values
-    }, [props.initialValues, props.inputs])
+    }
 
-    const validation = () => {
+    const setValidations = () => {
         const validations: any = {}
 
         _.forEach(props.inputs, (data) => {
@@ -48,23 +46,26 @@ export function Form(props: IForm) {
         return z.object(validations)
     }
 
-    const validations = validation()
+    const validations = setValidations()
 
     const formik = useFormik<TypeOf<typeof validations>>({
-        initialValues: initialValues(),
+        initialValues: setInitialValues(),
         validationSchema: validations ? toFormikValidationSchema(validations) : undefined,
         onSubmit: props.onSubmit
     })
 
-    // const hasValue = (content: any) => _.some(Object.values(formik.values), (value) => !!value)
+    useEffect(() => {
+        let isEmpty = false
 
-    // useEffect(() => {
-    //     if (hasValue(initialValues()) && !hasValue(formik.values)) return
+        for (const field in formik.initialValues) {
+            isEmpty = formik.initialValues[field] === props.initialValues[field]
+        }
 
-    //     if (!!props.clearWhen) return formik.resetForm()
+        if (isEmpty) return formik.resetForm()
 
-    //     formik.setValues(initialValues())
-    // }, [props.clearWhen, initialValues, formik])
+        formik.setValues(props.initialValues)
+        // eslint-disable-next-line
+    }, [props.initialValues])
 
     useEffect(() => {
         if (!formik.isSubmitting) return

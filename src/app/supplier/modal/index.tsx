@@ -42,7 +42,6 @@ export default function ModalCustomer(props: any) {
                 <div className="body">
                     <Form
                         onSubmit={onSubmit}
-                        clearWhen={!props.modal.value?.content?.id}
                         initialValues={{
                             name: props.modal.value?.content?.name || "",
                             cnpj: props.modal.value?.content?.cnpj || "",

@@ -41,7 +41,7 @@ export function Textarea(props: ITextarea) {
                     onFocus={() => {
                         if (props.onFocus) props.onFocus(props.name)
                     }}
-                    {..._.omit(props, ["onFocus", "maxLength", "className", "onChange", "mask", "rows", "value"])}
+                    {..._.omit(props, ["onFocus", "maxLength", "className", "onChange", "mask", "rows"])}
                 />
             </div>
             {!!props.error && (
