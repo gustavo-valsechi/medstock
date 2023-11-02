@@ -41,7 +41,7 @@ export function DateTime(props: IDateTime) {
                     onFocus={() => {
                         if (props.onFocus) props.onFocus(props.name)
                     }}
-                    {..._.omit(props, ["maxLength", "className", "onChange", "mask", "type"])}
+                    {..._.omit(props, ["maxLength", "className", "onChange", "mask", "type", "required"])}
                 />
             </div>
             {!!props.error && (

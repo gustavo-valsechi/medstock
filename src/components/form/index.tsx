@@ -13,6 +13,7 @@ import _ from "lodash"
 
 interface IForm {
     initialValues?: any
+    validation?: any
     onSubmit: (values: any, actions?: any) => void
     clearWhen?: boolean
     inputs: Array<any>
@@ -43,6 +44,8 @@ export function Form(props: IForm) {
             validations[data.name] = data.validation
         })
 
+        if (props.validation) return props.validation(z.object(validations))
+
         return z.object(validations)
     }
 
@@ -58,7 +61,7 @@ export function Form(props: IForm) {
         let isEmpty = false
 
         for (const field in formik.initialValues) {
-            isEmpty = formik.initialValues[field] === props.initialValues[field]
+            isEmpty = formik.initialValues[field] === (props.initialValues?.[field] || "")
         }
 
         if (isEmpty) return formik.resetForm()
@@ -75,7 +78,6 @@ export function Form(props: IForm) {
 
     const component = (data: any, index: number) => {
         const TYPES: any = {
-            "text": Input,
             "select": Select,
         }
 

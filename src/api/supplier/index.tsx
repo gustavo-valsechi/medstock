@@ -13,7 +13,7 @@ export async function getSuppliers(credentials: any) {
                 { id: 3, name: "Medisul", email: "gustavo@nummus.com.br", phone: "48999100598", cnpj: "09204942932000" },
             ],
             total: 3,
-            totalPage: 1,
+            totalPages: 1,
         }
     } catch (error: any) {
         console.error(error)

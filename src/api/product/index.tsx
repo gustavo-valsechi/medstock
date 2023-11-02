@@ -13,7 +13,7 @@ export async function getProducts(credentials: any) {
                 { id: 3, name: "tilenol", category: "terciária", value: 29.99, stock: 86 },
             ],
             total: 3,
-            totalPage: 1,
+            totalPages: 1,
         }
     } catch (error: any) {
         console.error(error)

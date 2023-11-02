@@ -49,7 +49,7 @@ export default function OrderClient({ data }: any) {
       <Table
         content={content?.content}
         paginate={{
-          total: content?.totalPage,
+          total: content?.totalPages,
           page: {
             value: page,
             set: fetch

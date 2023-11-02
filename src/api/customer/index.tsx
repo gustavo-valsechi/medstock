@@ -13,7 +13,7 @@ export async function getCustomers(credentials: any) {
                 { id: 3, name: "gustavo valsechi de freitas", email: "gustavo@nummus.com.br", phone: "48999100598", cpf: "09204942932" },
             ],
             total: 3,
-            totalPage: 1,
+            totalPages: 1,
         }
     } catch (error: any) {
         console.error(error)

@@ -95,7 +95,7 @@ export default class Refactoring {
 
             return value
         },
-        money(valor: any, nosign: boolean, integer: boolean) {
+        money(valor: any, nosign?: boolean, integer?: boolean) {
             valor = valor + ""
             valor = parseInt(valor.replace(/[\D]+/g, ""))
 

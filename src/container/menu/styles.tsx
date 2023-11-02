@@ -148,10 +148,11 @@ export const Container: any = styled.aside<{ show: boolean }>`
                     }
 
                     label {
-                        width: 9rem;
+                        width: 8.5rem;
                         white-space: nowrap;
                         overflow: hidden;
                         text-overflow: ellipsis;
+                        margin-right: .8rem;
 
                         &:first-child {
                             font-size: .8rem;

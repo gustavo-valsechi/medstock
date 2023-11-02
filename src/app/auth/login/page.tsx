@@ -35,13 +35,15 @@ export default function Login(props: any) {
                             {
                                 label: "E-mail",
                                 name: "email",
-                                validation: z.string({ required_error: "Campo obrigatório!" }).email("E-mail inválido!")
+                                validation: z.string({ required_error: "Campo obrigatório!" }).email("E-mail inválido!"),
+                                maxLength: 255
                             },
                             {
                                 label: "Senha",
                                 name: "password",
                                 type: "password",
-                                validation: z.string({ required_error: "Campo obrigatório!" })
+                                validation: z.string({ required_error: "Campo obrigatório!" }),
+                                maxLength: 255
                             },
                         ]}
                         buttons={[{

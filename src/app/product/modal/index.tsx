@@ -45,7 +45,7 @@ export default function ModalCustomer(props: any) {
                         initialValues={{
                             name: props.modal.value?.content?.name || "",
                             category: props.modal.value?.content?.category || "",
-                            value: props.modal.value?.content?.value || "",
+                            value: Refactoring.mask.money(props.modal.value?.content?.value),
                             stock: props.modal.value?.content?.stock || "",
                         }}
                         inputs={[

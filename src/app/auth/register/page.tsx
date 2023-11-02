@@ -5,6 +5,7 @@ import { Container } from "./styles"
 import { Form, Logo } from "../../../components"
 import { useRouter } from "next/navigation"
 import { register } from "@/api/auth"
+import * as z from "zod"
 
 export default function Register(props: any) {
     const router = useRouter()
@@ -25,11 +26,41 @@ export default function Register(props: any) {
                     <div className="content-title">Fazer cadastro</div>
                     <Form
                         onSubmit={onSubmit}
+                        validation={(z: any) => z.refine((data: any) => data.password === data.password_confirm, {
+                            message: "Confirmação de senha inválida!",
+                            path: ["password_confirm"]
+                        })}
                         inputs={[
-                            { label: "Nome completo", name: "name" },
-                            { label: "E-mail", name: "email" },
-                            { label: "Senha", name: "password" },
-                            { label: "Confirmar senha", name: "password_confirm" },
+                            {
+                                label: "Nome completo",
+                                name: "name",
+                                validation: z.string({ required_error: "Campo obrigatório!" }),
+                                required: true,
+                                maxLength: 255
+                            },
+                            {
+                                label: "E-mail",
+                                name: "email",
+                                validation: z.string({ required_error: "Campo obrigatório!" }).email("E-mail inválido!"),
+                                required: true,
+                                maxLength: 255
+                            },
+                            {
+                                label: "Senha",
+                                name: "password",
+                                type: "password",
+                                validation: z.string({ required_error: "Campo obrigatório!" }).min(6, "Mínimo 6 caracteres"),
+                                required: true,
+                                maxLength: 255
+                            },
+                            {
+                                label: "Confirmar senha",
+                                name: "password_confirm",
+                                type: "password",
+                                validation: z.string({ required_error: "Campo obrigatório!" }),
+                                required: true,
+                                maxLength: 255
+                            },
                         ]}
                         buttons={[
                             {

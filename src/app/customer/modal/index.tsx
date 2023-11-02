@@ -44,9 +44,9 @@ export default function ModalCustomer(props: any) {
                         onSubmit={onSubmit}
                         initialValues={{
                             name: props.modal.value?.content?.name || "",
-                            cpf: props.modal.value?.content?.cpf || "",
+                            cpf: Refactoring.mask.docNumber(props.modal.value?.content?.cpf),
+                            phone: Refactoring.mask.phone(props.modal.value?.content?.phone),
                             email: props.modal.value?.content?.email || "",
-                            phone: props.modal.value?.content?.phone || ""
                         }}
                         inputs={[
                             {
