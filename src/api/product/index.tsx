@@ -22,6 +22,8 @@ export async function getProducts(credentials: any) {
 
 export async function saveProduct(body: any) {
     try {
+        console.log(body)
+
         const { data } = await api[body.uuid ? "put" : "post"]("product", _.omit(body, ["uuid"]), { params: { uuid: body.uuid } })
 
         toast.success(`Produto ${body.uuid ? "atualizado" : "cadastrado"} com sucesso!`)

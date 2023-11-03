@@ -22,6 +22,8 @@ export async function getSuppliers(credentials: any) {
 
 export async function saveSupplier(body: any) {
     try {
+        console.log(body)
+
         const { data } = await api[body.uuid ? "put" : "post"]("supplier", _.omit(body, ["uuid"]), { params: { uuid: body.uuid } })
 
         toast.success(`Fornecedor ${body.uuid ? "atualizado" : "cadastrado"} com sucesso!`)

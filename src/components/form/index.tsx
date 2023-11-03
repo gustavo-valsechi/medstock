@@ -16,7 +16,7 @@ interface IForm {
     validation?: any
     onSubmit: (values: any, actions?: any) => void
     clearWhen?: boolean
-    inputs: Array<any>
+    inputs: any
     buttons?: Array<any>
 }
 
@@ -76,7 +76,7 @@ export function Form(props: IForm) {
         setSubmitted(true)
     }, [formik])
 
-    const component = (data: any, index: number) => {
+    const component = (data: any) => {
         const TYPES: any = {
             "select": Select,
         }
@@ -84,7 +84,6 @@ export function Form(props: IForm) {
         const TypeComponent = TYPES[data.type] || Input
 
         return <TypeComponent
-            key={index}
             type={TYPES[data.type] ? undefined : data.type}
             value={formik.values?.[data.name]}
             error={focus
@@ -103,14 +102,30 @@ export function Form(props: IForm) {
 
     return (
         <Container onSubmit={formik.handleSubmit}>
-            {_.map(props.inputs, (data: any, index: number) => (
-                component(data, index))
-            )}
-            <div className="form-buttons">
-                {_.map(props.buttons, (data, index) =>
-                    <Button key={index} {...data} />
+            {!_.isArray(props.inputs)
+                ? (props.inputs as any).content({
+                    inputs: _.map((props.inputs as any).inputs || [], (data: any, index) => (
+                        <React.Fragment key={index}>
+                            {component(data)}
+                        </React.Fragment>)
+                    ),
+                    buttons: <div className="form-buttons">
+                        {_.map(props.buttons, (data, index) =>
+                            <Button key={index} {...data} />
+                        )}
+                    </div>,
+                }) || <></>
+                : _.map(props.inputs, (data: any, index: number) =>
+                    <React.Fragment key={index}>
+                        {component(data)}
+                    </React.Fragment>
                 )}
-            </div>
+            {_.isArray(props.inputs) &&
+                <div className="form-buttons">
+                    {_.map(props.buttons, (data, index) =>
+                        <Button key={index} {...data} />
+                    )}
+                </div>}
         </Container>
     )
 }

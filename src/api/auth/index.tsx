@@ -23,6 +23,7 @@ export async function login(credentials: any) {
 
 export async function register(body: any) {
     try {
+        console.log(body)
         toast.success("Conta cadastrada com sucesso!")
     } catch (error: any) {
         console.error(error)

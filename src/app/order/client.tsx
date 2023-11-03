@@ -47,6 +47,7 @@ export default function OrderClient({ data }: any) {
         <p>Crie pedidos de venda com facilidade e eficiência, enquanto gerencia seu caixa de forma rápida e descomplicada.</p>
       </div>
       <Table
+        loading={loading}
         content={content?.content}
         paginate={{
           total: content?.totalPages,
@@ -63,7 +64,7 @@ export default function OrderClient({ data }: any) {
           {
             column: {
               action: {
-                icon: "fa-solid fa-arrows-rotate",
+                icon: `fa-solid fa-arrows-rotate ${loading ? "fa-spin" : ""}`,
                 disabled: loading,
                 function: () => fetch(0),
                 position: "left"
@@ -76,7 +77,13 @@ export default function OrderClient({ data }: any) {
           { column: "Produto", row: { name: "product", style: { textTransform: "capitalize" } } },
           { column: "Total", row: { name: "total", mask: Refactoring.format.money } },
           {
-            column: { action: { icon: "fa-solid fa-plus", function: order } },
+            column: {
+              action: {
+                label: "Novo pedido",
+                icon: "fa-solid fa-plus",
+                function: order,
+              }
+            },
             row: { actions: [{ function: (data: any) => order(data) }] }
           },
         ]}

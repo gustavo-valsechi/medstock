@@ -54,6 +54,7 @@ export default function SupplierClient({ data }: any) {
         <p>Aprimore o reabastecimento do seu estoque ao incluir os fornecedores dos seus produtos.</p>
       </div>
       <Table
+        loading={loading}
         content={content?.content}
         paginate={{
           total: content?.totalPages,
@@ -70,7 +71,7 @@ export default function SupplierClient({ data }: any) {
           {
             column: {
               action: {
-                icon: "fa-solid fa-arrows-rotate",
+                icon: `fa-solid fa-arrows-rotate ${loading ? "fa-spin" : ""}`,
                 disabled: loading,
                 function: () => fetch(0),
                 position: "left"

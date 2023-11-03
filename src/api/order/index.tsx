@@ -6,6 +6,8 @@ export async function getOrders(credentials: any) {
     try {
         // const { data } = await api.get("order", { params: credentials })
 
+        // await new Promise((resolve) => setTimeout(resolve, 3000))
+
         return {
             content: [
                 { id: 1, number: 1, customer: "gustavo valsechi de freitas", product: "tilenol", total: 345.98 },
@@ -22,6 +24,8 @@ export async function getOrders(credentials: any) {
 
 export async function saveOrder(body: any) {
     try {
+        console.log(body)
+
         const { data } = await api.post("order", _.omit(body, ["uuid"]), { params: { uuid: body.uuid } })
 
         toast.success("Pedido registrado com sucesso!")

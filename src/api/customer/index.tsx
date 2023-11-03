@@ -22,6 +22,8 @@ export async function getCustomers(credentials: any) {
 
 export async function saveCustomer(body: any) {
     try {
+        console.log(body)
+
         const { data } = await api[body.uuid ? "put" : "post"]("customer", _.omit(body, ["uuid"]), { params: { uuid: body.uuid } })
 
         toast.success(`Cliente ${body.uuid ? "atualizado" : "cadastrado"} com sucesso!`)

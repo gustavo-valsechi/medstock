@@ -37,7 +37,9 @@ export default function ModalCustomer(props: any) {
         >
             <Container>
                 <div className="header">
-
+                    <div className="header-avatar">
+                        <i className="fa-solid fa-building" />
+                    </div>
                 </div>
                 <div className="body">
                     <Form

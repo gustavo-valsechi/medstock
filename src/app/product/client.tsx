@@ -54,6 +54,7 @@ export default function ProductClient({ data }: any) {
         <p>Organize seus produtos conforme o seu estoque, configurando-os conforme suas preferências.</p>
       </div>
       <Table
+        loading={loading}
         content={content?.content}
         paginate={{
           total: content?.totalPages,
@@ -70,7 +71,7 @@ export default function ProductClient({ data }: any) {
           {
             column: {
               action: {
-                icon: "fa-solid fa-arrows-rotate",
+                icon: `fa-solid fa-arrows-rotate ${loading ? "fa-spin" : ""}`,
                 disabled: loading,
                 function: () => fetch(0),
                 position: "left"

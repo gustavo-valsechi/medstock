@@ -13,8 +13,9 @@ interface IColumn {
   action?: {
     disabled?: boolean
     position?: string
-    function: (data?: any) => void
+    function: (data?: any) => any
     icon?: string
+    label?: string
   }
 }
 
@@ -22,16 +23,14 @@ interface IRow {
   actions?: Array<{
     disabled?: boolean
     position?: string
-    function: (data?: any) => void
+    function: (data?: any) => any
     icon?: string
+    label?: string
   }>
-  image?: {
-    value?: (data: any) => void
-    icon?: string
-  } | ((data: any) => void)
+  image?: any
   style?: object
-  mask?: (data: any) => void
-  custom?: (data: any) => void
+  mask?: any
+  custom?: (data: any) => React.ReactNode
   name?: string
 }
 
@@ -53,7 +52,7 @@ interface ITable {
     total: number
     page: {
       value: number
-      set: (value: number) => void
+      set: (value: number) => any
     }
   }
 }
@@ -69,22 +68,28 @@ export function Table(props: ITable) {
           <thead>
             <tr>
               {_.map(props.options, (option, index: number) =>
-                <th key={index} style={(option.column as { style: object })?.style}>
+                <th key={index} style={(option.column as IColumn)?.style}>
                   <div
-                    className={`table-temp ${(option.column as { action: object })?.action
-                      ? `action ${(option.column as { action: { position: string } })?.action?.position
-                        ? (option.column as { action: { position: string } })?.action?.position
+                    className={`table-temp ${(option.column as IColumn)?.action
+                      ? `action ${(option.column as IColumn)?.action?.position
+                        ? (option.column as IColumn)?.action?.position
                         : ""}`
                       : ""}`
                     }
                   >
-                    {!!(option.column as { action: object })?.action
+                    {!!(option.column as IColumn)?.action
                       ? <button
                         className="button"
-                        onClick={(option.column as { action: { function: (data?: any) => void } })?.action?.function}
-                        disabled={(option.column as { action: { disabled: boolean } })?.action?.disabled}
+                        onClick={(option.column as IColumn)?.action?.function}
+                        disabled={(option.column as IColumn)?.action?.disabled}
+                        data-label={String(!!(option.column as IColumn)?.action?.label)}
                       >
-                        <i className={(option.column as { action: { icon: string } })?.action?.icon || "fa-solid fa-eye"} />
+                        <i className={(option.column as IColumn)?.action?.icon || "fa-solid fa-eye"} />
+                        {!!(option.column as IColumn)?.action?.label && (
+                          <p>
+                            {(option.column as IColumn)?.action?.label}
+                          </p>
+                        )}
                       </button>
                       : _.isString(option.column) ? option.column : ""}
                   </div>
@@ -99,12 +104,12 @@ export function Table(props: ITable) {
                   {_.map(props.options, (data, index: number) => (
                     <td key={index}>
                       <LoadingBar
-                        height="2.5rem"
+                        height="2.4rem"
                         borderRadius={
                           index === 0
-                            ? "30px 0 0 30px"
+                            ? "5px 0 0 5px"
                             : props.options?.length - 1 === index
-                              ? "0 30px 30px 0"
+                              ? "0 5px 5px 0"
                               : "0"
                         }
                         margin={key === 0 ? "1.5rem 0 0" : ".5rem 0 0"}
@@ -119,14 +124,14 @@ export function Table(props: ITable) {
                       <div
                         className={`
                           table-temp 
-                          ${(option.row as { actions: Array<any> })?.actions ? "action" : ""} 
-                          ${(option.row as { image: any })?.image ? "image" : ""}
+                          ${(option.row as IRow)?.actions ? "action" : ""} 
+                          ${(option.row as IRow)?.image ? "image" : ""}
                         `}
-                        style={(option.row as { style: object })?.style}
+                        style={(option.row as IRow)?.style}
                       >
-                        {!!(option.row as { actions: Array<any> })?.actions
+                        {!!(option.row as IRow)?.actions
                           ? <div className="actions">
-                            {_.map((option.row as { actions: Array<any> })?.actions, (action, index) =>
+                            {_.map((option.row as IRow)?.actions, (action, index) =>
                               <button
                                 key={index}
                                 className={`
@@ -137,30 +142,35 @@ export function Table(props: ITable) {
                                 disabled={action.disabled}
                               >
                                 <i className={action.icon || "fa-solid fa-eye"} />
+                                {!!action.label && (
+                                  <p>
+                                    {action.label}
+                                  </p>
+                                )}
                               </button>)}
                           </div>
-                          : (option.row as { image: any })?.image
+                          : (option.row as IRow)?.image
                             ? <div className="avatar">
-                              {!!(option.row as { image: { value: (data: any) => React.ReactNode } })?.image?.value
-                                ? (option.row as { image: { value: (data: any) => React.ReactNode } })?.image?.value(data)
+                              {!!(option.row as IRow)?.image?.value
+                                ? (option.row as IRow)?.image?.value(data)
                                 : !!_.isFunction((option.row as { image: (data: any) => React.ReactNode })?.image)
                                   ? (option.row as { image: (data: any) => React.ReactNode })?.image(data)
                                   : false
                                     ? <Image
-                                      src={!!(option.row as { image: { value: (data: any) => string } })?.image?.value
-                                        ? (option.row as { image: { value: (data: any) => string } })?.image?.value(data)
-                                        : (option.row as { image: (data: any) => string })?.image(data)}
+                                      src={!!(option.row as IRow)?.image?.value
+                                        ? (option.row as IRow)?.image?.value(data)
+                                        : (option.row as IRow)?.image(data)}
                                       alt=""
                                     />
                                     : <i className={(option.row as { image: { icon: string } })?.image?.icon || "fa-solid fa-circle-user"} />}
                             </div>
                             : <div className="row-content">
-                              {!!(option.row as { mask: (data: any) => React.ReactNode })?.mask
-                                ? (option.row as { mask: (data: any) => React.ReactNode })?.mask(data[(option.row as { name: string })?.name]) || "---"
-                                : !!(option.row as { custom: (data: any) => React.ReactNode })?.custom
-                                  ? (option.row as { custom: (data: any) => React.ReactNode })?.custom(data[(option.row as { name: string })?.name] || data)
-                                  : !!data[(option.row as { name: string })?.name || (option.row as string)]
-                                    ? limit(data[(option.row as { name: string })?.name || (option.row as string)])
+                              {!!(option.row as IRow)?.mask
+                                ? (option.row as IRow)?.mask(data[(option.row as any)?.name]) || "---"
+                                : !!(option.row as IRow)?.custom
+                                  ? (option.row as any)?.custom(data[(option.row as any)?.name] || data) || "---"
+                                  : !!data[(option.row as IRow)?.name || (option.row as string)]
+                                    ? limit(data[(option.row as IRow)?.name || (option.row as string)])
                                     : "---"}
                             </div>}
                       </div>

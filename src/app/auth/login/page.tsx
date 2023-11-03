@@ -18,7 +18,11 @@ export default function Login(props: any) {
     async function onSubmit(credentials: any) {
         setLoading(true)
 
-        setToken(await login(credentials))
+        const token = await login(credentials)
+
+        setToken(token)
+
+        router.push("/order")
 
         setLoading(false)
     }

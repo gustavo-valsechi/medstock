@@ -37,7 +37,9 @@ export default function ModalCustomer(props: any) {
         >
             <Container>
                 <div className="header">
-
+                    <div className="header-avatar">
+                        <i className="fa-solid fa-bag-shopping" />
+                    </div>
                 </div>
                 <div className="body">
                     <Form
@@ -79,7 +81,7 @@ export default function ModalCustomer(props: any) {
                                 label: "Estoque",
                                 disabled: saving,
                                 mask: Refactoring.mask.number,
-                                validation: z.string({ required_error: "Campo obrigatório!" }),
+                                validation: z.number({ required_error: "Campo obrigatório!" }),
                                 maxLenght: 10,
                                 required: true
                             },

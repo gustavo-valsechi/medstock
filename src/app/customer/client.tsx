@@ -54,6 +54,7 @@ export default function CustomerClient({ data }: any) {
         <p>Fidelize seus clientes cadastrando-os na plataforma. Com os contatos salvos, a comunicação futura torna-se mais fácil e eficaz, fortalecendo assim o relacionamento com sua clientela.</p>
       </div>
       <Table
+        loading={loading}
         content={content?.content}
         paginate={{
           total: content?.totalPages,
@@ -70,7 +71,7 @@ export default function CustomerClient({ data }: any) {
           {
             column: {
               action: {
-                icon: "fa-solid fa-arrows-rotate",
+                icon: `fa-solid fa-arrows-rotate ${loading ? "fa-spin" : ""}`,
                 disabled: loading,
                 function: () => fetch(0),
                 position: "left"

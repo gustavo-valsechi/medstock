@@ -80,22 +80,14 @@ export const Container = styled.div<IProps>`
                     display: flex;
                     justify-content: flex-end;
                     padding: .8rem .5rem !important;
+                    position: relative;
 
                     &.left {
                         justify-content: flex-start;
-
-                        .button {
-                            margin-left: 0;
-                            margin-right: .5rem;
-                        }
                     }
 
                     &.center {
                         justify-content: center;
-
-                        .button {
-                            margin-left: 0;
-                        }
                     }
 
                     .actions {
@@ -105,31 +97,52 @@ export const Container = styled.div<IProps>`
                     }
 
                     .button {
-                        width: 1.8rem;
+                        min-width: 1.8rem;
                         height: 1.8rem;
                         border-radius: 5px;
                         border: 1px solid ${({ theme }) => theme.tertiary};
                         background: ${({ theme }) => theme.tertiary};
                         color: ${({ theme }) => theme.secondary};
                         cursor: pointer;
-                        transition: ease 0.3s;
+                        transition: ease 0.3s, width 1s, position 0s;
                         display: flex;
                         align-items: center;
                         justify-content: center;
+                        gap: .5rem;
                         font-size: .8rem;
-                        margin-left: .5rem;
+                        padding: 0 .5rem;
+                        position: relative;
 
                         &:disabled {
                             pointer-events: none;
-                            opacity: .5;
+                            opacity: .6;
+                        }
+
+                        p {
+                            position: absolute;
+                            right: 0;
+                            z-index: -1;
+                            opacity: 0;
+                            transition: z-index 0s, position 0s, opacity 0s;
                         }
 
                         &:hover {
                             opacity: .9;
 
+                            &[data-label="true"] {
+                                position: absolute;
+                            }
+
                             &.negative {
                                 color: ${({ theme }) => theme.primary};
                                 background: ${({ theme }) => theme.negative};
+                            }
+
+                            p {
+                                position: relative;
+                                z-index: 0;
+                                opacity: 1;
+                                transition: z-index 0s, position .3s, opacity .2s;
                             }
                         }
                     }
