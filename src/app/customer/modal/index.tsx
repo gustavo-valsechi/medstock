@@ -25,9 +25,10 @@ export default function ModalCustomer(props: any) {
         content.cpf = Refactoring.removeMask.docNumber(content.cpf)
 
         await saveCustomer({
+            id: props.modal.value?.content?.id,
             nome: content.name,
             email: content.email,
-            telefone: content.phone,
+            telefone: Number(content.phone),
             cpf: content.cpf,
             cep: "88813450",
             endereco: "Rua ...",

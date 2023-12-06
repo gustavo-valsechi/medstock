@@ -24,7 +24,16 @@ export async function getCustomers(credentials: any) {
 
 export async function saveCustomer(body: any) {
     try {
-        const { data } = await api[body.uuid ? "put" : "post"]("client", _.omit(body, ["uuid"]), { params: { uuid: body.uuid } })
+
+        const req: any = {
+            "true": { method: "put", url: `client/${body.id}` },
+            "false": { method: "post", url: "client" },
+        }
+
+        const method = req[String(!!body.id)].method
+        const url = req[String(!!body.id)].url
+
+        const { data } = await (api as any)[method](url, _.omit(body, ["id"]))
 
         toast.success(`Cliente ${body.uuid ? "atualizado" : "cadastrado"} com sucesso!`)
 
