@@ -5,11 +5,11 @@ import { Table } from "../../components"
 import { Container } from "./styles"
 import Refactoring from "../../utils"
 
-import { getOrders } from "@/api/order"
+import { getPurchases } from "@/api/purchase"
 
 import ModalCustomer from "./modal"
 
-export default function OrderClient({ data }: any) {
+export default function PurchaseClient({ data }: any) {
 
   const [modal, setModal] = useState({ is: false, content: {} })
   const [page, setPage] = useState(0)
@@ -20,16 +20,16 @@ export default function OrderClient({ data }: any) {
     setPage(page || 0)
     setLoading(true)
 
-    const data = await getOrders({
+    const data = await getPurchases({
       offset: page,
-      order: { dhOperation: "DESC" }
+      purchase: { dhOperation: "DESC" }
     })
 
     setContent(data)
     setLoading(false)
   }
 
-  const order = (data: any) => {
+  const purchase = (data: any) => {
     setModal({
       is: true,
       content: data
@@ -43,8 +43,8 @@ export default function OrderClient({ data }: any) {
         fetch={() => fetch(0)}
       />
       <div className="templates-label">
-        <span>Vendas</span>
-        <p>Crie pedidos de venda com facilidade e eficiência, enquanto gerencia seu caixa de forma rápida e descomplicada.</p>
+        <span>Compras</span>
+        <p>Execute pedidos de compra para adicionar novos produtos no seu estoque de forma simples.</p>
       </div>
       <Table
         loading={loading}
@@ -73,7 +73,7 @@ export default function OrderClient({ data }: any) {
             row: { image: { icon: "fa-solid fa-dollar-sign" } }
           },
           { column: "Número", row: { custom: (data) => `#${data.number}`, style: { fontWeight: 600 } } },
-          { column: "Cliente", row: { name: "customer", style: { textTransform: "capitalize" } } },
+          { column: "Fornecedor", row: { name: "customer", style: { textTransform: "capitalize" } } },
           { column: "Produto", row: { name: "product", style: { textTransform: "capitalize" } } },
           { column: "Total", row: { name: "total", mask: Refactoring.format.money } },
           {
@@ -81,10 +81,10 @@ export default function OrderClient({ data }: any) {
               action: {
                 label: "Novo pedido",
                 icon: "fa-solid fa-plus",
-                function: order,
+                function: purchase,
               }
             },
-            row: { actions: [{ function: (data: any) => order(data) }] }
+            row: { actions: [{ function: (data: any) => purchase(data) }] }
           },
         ]}
       />

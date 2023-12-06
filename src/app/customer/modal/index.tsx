@@ -24,7 +24,15 @@ export default function ModalCustomer(props: any) {
         content.phone = Refactoring.removeMask.phone(content.phone)
         content.cpf = Refactoring.removeMask.docNumber(content.cpf)
 
-        await saveCustomer(content)
+        await saveCustomer({
+            nome: content.name,
+            email: content.email,
+            telefone: content.phone,
+            cpf: content.cpf,
+            cep: "88813450",
+            endereco: "Rua ...",
+            estado: "SC",
+        })
 
         setSaving(false)
     }

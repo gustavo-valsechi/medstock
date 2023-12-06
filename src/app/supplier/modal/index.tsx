@@ -8,7 +8,7 @@ import * as z from "zod"
 
 import { saveSupplier } from "@/api/supplier"
 
-export default function ModalCustomer(props: any) {
+export default function ModalSupplier(props: any) {
 
     const [saving, setSaving] = useState(false)
 

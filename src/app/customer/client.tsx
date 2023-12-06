@@ -5,7 +5,7 @@ import { Table } from "../../components"
 import { Container } from "./styles"
 import Refactoring from "../../utils"
 
-import { getCustomers } from "@/api/customer"
+import { getCustomers, removeCustomer } from "@/api/customer"
 
 import ModalCustomer from "./modal"
 
@@ -30,13 +30,6 @@ export default function CustomerClient({ data }: any) {
   }
 
   const setCustomer = (data: any) => {
-    setModal({
-      is: true,
-      content: data
-    })
-  }
-
-  const removeCustomer = (data: any) => {
     setModal({
       is: true,
       content: data
@@ -89,7 +82,7 @@ export default function CustomerClient({ data }: any) {
           },
           {
             column: { action: { icon: "fa-solid fa-plus", function: setCustomer }, style: { width: "2.3rem" } },
-            row: { actions: [{ icon: "fa-solid fa-trash-can", function: (data: any) => removeCustomer(data) }] }
+            row: { actions: [{ icon: "fa-solid fa-trash-can", function: async (data: any) => await removeCustomer(data.id) }] }
           },
         ]}
       />

@@ -4,6 +4,12 @@ import _ from "lodash"
 
 export async function login(credentials: any) {
     try {
+        // const { data } = await api.get("user")
+
+        // const user = _.find(data, (content) => content.senha === credentials.password)
+
+        // if (!user) throw new Error("E-mail ou senha inválida, tente novamente")
+
         const token = Buffer.from(JSON.stringify(credentials)).toString("base64")
 
         localStorage.setItem("@Medstock:token", token)
@@ -17,17 +23,20 @@ export async function login(credentials: any) {
         return token
     } catch (error: any) {
         console.error(error)
-        toast.success(error.message)
+        toast.error(error.message)
     }
 }
 
 export async function register(body: any) {
     try {
-        console.log(body)
+        const { data } = await api.post("user", body)
+
         toast.success("Conta cadastrada com sucesso!")
+
+        return data
     } catch (error: any) {
         console.error(error)
-        toast.success(error.message)
+        toast.error(error.message)
     }
 }
 
@@ -41,6 +50,6 @@ export async function getUser() {
         }
     } catch (error: any) {
         console.error(error)
-        toast.success(error.message)
+        toast.error(error.message)
     }
 }

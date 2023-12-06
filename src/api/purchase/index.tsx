@@ -2,7 +2,7 @@ import { api } from "../../services"
 import { toast } from "react-hot-toast"
 import _ from "lodash"
 
-export async function getOrders(credentials: any) {
+export async function getPurchases(credentials: any) {
     try {
         // const { data } = await api.get("order", { params: credentials })
 
@@ -22,7 +22,7 @@ export async function getOrders(credentials: any) {
     }
 }
 
-export async function saveOrder(body: any) {
+export async function savePurchase(body: any) {
     try {
         console.log(body)
 

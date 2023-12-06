@@ -4,7 +4,9 @@ import _ from "lodash"
 
 export async function getCustomers(credentials: any) {
     try {
-        // const { data } = await api.get("customer", { params: credentials })
+        const { data } = await api.get("client")
+
+        console.log(data)
 
         return {
             content: [
@@ -22,28 +24,26 @@ export async function getCustomers(credentials: any) {
 
 export async function saveCustomer(body: any) {
     try {
-        console.log(body)
-
-        const { data } = await api[body.uuid ? "put" : "post"]("customer", _.omit(body, ["uuid"]), { params: { uuid: body.uuid } })
+        const { data } = await api[body.uuid ? "put" : "post"]("client", _.omit(body, ["uuid"]), { params: { uuid: body.uuid } })
 
         toast.success(`Cliente ${body.uuid ? "atualizado" : "cadastrado"} com sucesso!`)
 
         return data
     } catch (error: any) {
         console.error(error)
-        toast.success(error.message)
+        toast.error(error.message)
     }
 }
 
 export async function removeCustomer(uuid: string) {
     try {
-        const { data } = await api.delete(`customer/${uuid}`)
+        const { data } = await api.delete(`client/${uuid}`)
 
         toast.success("Cliente removido com sucesso!")
 
         return data
     } catch (error: any) {
         console.error(error)
-        toast.success(error.message)
+        toast.error(error.message)
     }
 }

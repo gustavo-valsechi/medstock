@@ -11,11 +11,14 @@ export default function Register(props: any) {
     const router = useRouter()
 
     const onSubmit = async (data: any) => {
-        console.log(data)
+        const response = await register({
+            "nome": data.name,
+            "email": data.email,
+            "senha": data.password,
+            "role": "USER"
+        })
 
-        await register({})
-
-        router.push("/auth/login")
+        if (response) router.push("/auth/login")
     }
 
     return (

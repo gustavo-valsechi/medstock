@@ -31,7 +31,7 @@ export async function saveProduct(body: any) {
         return data
     } catch (error: any) {
         console.error(error)
-        toast.success(error.message)
+        toast.error(error.message)
     }
 }
 
@@ -44,6 +44,6 @@ export async function removeProduct(uuid: string) {
         return data
     } catch (error: any) {
         console.error(error)
-        toast.success(error.message)
+        toast.error(error.message)
     }
 }

@@ -20,9 +20,10 @@ export default function Login(props: any) {
 
         const token = await login(credentials)
 
-        setToken(token)
-
-        router.push("/order")
+        if (token) {
+            setToken(token)
+            router.push("/order")
+        }
 
         setLoading(false)
     }

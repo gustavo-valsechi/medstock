@@ -20,7 +20,8 @@ export default function Menu(props: { show: boolean }) {
     const { logout, user } = useAuth()
 
     const navigation: Array<INavigation> = [
-        { icon: "fa-solid fa-hand-holding-dollar", label: "Pedidos", route: "/order" },
+        { icon: "fa-solid fa-hand-holding-dollar", label: "Vendas", route: "/order" },
+        { icon: "fa-solid fa-arrow-right-arrow-left", label: "Compras", route: "/purchase" },
         { icon: "fa-solid fa-boxes-stacked", label: "Produtos", route: "/product" },
         { icon: "fa-solid fa-users", label: "Clientes", route: "/customer" },
         { icon: "fa-solid fa-truck-ramp-box", label: "Fornecedores", route: "/supplier" },
